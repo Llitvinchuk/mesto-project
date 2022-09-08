@@ -6,6 +6,9 @@
   background-color: transparent;
   cursor: pointer;
 }
+.popup__close-button:hover {
+  opacity: 0.6;
+}
 @media screen and (min-width: 320px) {
   .popup__close-button {
     top: -36px;

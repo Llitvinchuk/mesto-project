@@ -5,18 +5,15 @@
   border-radius: 10px;
   max-width: 400px;
   width: 100%;
-  min-height: 300px;
   position: relative;
 }
 @media screen and (min-width: 320px) {
   .popup__overlay {
     max-width: 282px;
-    max-height: 322px;
   }
 }
 @media screen and (min-width: 768px) {
   .popup__overlay {
     max-width: 430px;
-    max-height: 330px;
   }
 }

@@ -1,14 +1,14 @@
-.profile__edit-button__image {
+.profile__edit-button-image {
   background-color: black;
 }
 @media screen and (min-width: 320px) {
-  .profile__edit-button__image {
+  .profile__edit-button-image {
     max-width: 7.5px;
     max-height: 7.5px;
   }
 }
 @media screen and (min-width: 768px) {
-  .profile__edit-button__image {
+  .profile__edit-button-image {
     max-width: 10px;
     max-height: 10px;
   }
