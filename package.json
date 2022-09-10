@@ -1,0 +1,20 @@
+{
+  "name": "mesto-project",
+  "version": "1.0.0",
+  "description": "Проект: Место",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "touch .nojekyll && gh-pages -t true"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Llitvinchuk/mesto-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Llitvinchuk/mesto-project/issues"
+  },
+  "homepage": "https://github.com/Llitvinchuk/mesto-project#readme"
+}
