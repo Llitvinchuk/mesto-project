@@ -6,6 +6,9 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background: url("../../../images/plus.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .profile__add-button:hover {
   opacity: 0.6;
