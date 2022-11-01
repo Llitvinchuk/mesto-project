@@ -26,11 +26,15 @@
             <p class="profile__subtitle">Исследователь океанов</p>
           </div>
 
-          <button class="profile__add-button" type="button"></button>
+          <button class="profile__add-button" type="submit"></button>
         </section>
         <section class="elements">
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/karach.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Байкал</h2>
               <button class="element__button" type="button">
@@ -39,7 +43,11 @@
             </div>
           </div>
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/elbr.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Алтай</h2>
               <button class="element__button" type="button">
@@ -48,7 +56,11 @@
             </div>
           </div>
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/elbr.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Абхазия</h2>
               <button class="element__button" type="button">
@@ -57,7 +69,11 @@
             </div>
           </div>
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/domb.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Гора Эльбрус</h2>
               <button class="element__button" type="button">
@@ -66,7 +82,11 @@
             </div>
           </div>
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/karach.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Байкал</h2>
               <button class="element__button" type="button">
@@ -75,7 +95,11 @@
             </div>
           </div>
           <div class="element">
+            <button class="element__trash" type="button">
+              <img src="./images/Trash.svg" alt="урна" class="element__trash_button">
+            </button>
             <img class="element__image" src="./images/domb.png" alt="фото" />
+            
             <div class="element__mask-group">
               <h2 class="element__title">Байкал</h2>
               <button class="element__button" type="button">
@@ -89,7 +113,7 @@
         <p class="footer__copyright">© 2020 Mesto Russia</p>
       </footer>
     </div>
-    <div class="popup">
+    <div class="popup popup_disabled">
       <div class="popup__overlay">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="popup__form">
@@ -111,8 +135,35 @@
           </fieldset>
           <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
-        <button class="popup__close-button" type="button"></button>
+        <button class="popup__close-button" type="submit"></button>
+      </div>
+    </div>
+    <div class="forma forma_disabled">
+      <div class="forma__overlay">
+        <h2 class="forma__title">Новое место</h2>
+        <form class="forma__form" name="forma__form">
+          <fieldset class="forma__info">
+            <input
+              placeholder="Название"
+              class="forma__content"
+              type="text"
+              name="forma-title"
+              id="forma-title"
+            />
+            <input
+              placeholder="Ссылка на картинку"
+              class="forma__content"
+              type="text"
+              name="forma-info"
+              id="forma-info"
+            />
+          </fieldset>
+          <button class="forma__create-button" type="button">Создать</button>
+        </form>
+        <button class="forma__close-button" type="submit"></button>
       </div>
     </div>
   </body>
+  <script src="./index.js"></script>
+  <script src="./data.js"></script>
 </html>

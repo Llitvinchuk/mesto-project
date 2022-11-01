@@ -1,0 +1,31 @@
+.forma__create-button {
+    background-color: #000000;
+  border-radius: 2px;
+  color: #ffffff;
+  width: 100%;
+  font-weight: 400;
+  border: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.forma__create-button:hover {
+    opacity: 0.8;
+  }
+  @media screen and (min-width: 320px) {
+    .forma__create-button {
+      max-width: 238px;
+      height: 46px;
+      margin: 0 22px 25px 22px;
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .forma__create-button {
+      max-width: 358px;
+      height: 50.15px;
+      margin: 0 36px 35px 36px;
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }

@@ -1,0 +1,27 @@
+.forma__close-button {
+    background-image: url("../../../images/close.png");
+  position: absolute;
+  background-size: cover;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.forma__close-button:hover {
+    opacity: 0.6;
+  }
+  @media screen and (min-width: 320px) {
+    .forma__close-button {
+      top: -36px;
+      right: 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .forma__close-button {
+      top: -40px;
+      right: -40px;
+      width: 32px;
+      height: 32px;
+    }
+  }

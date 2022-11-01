@@ -30,3 +30,15 @@
 @import url("../blocks/popup/__submit-button/popup__submit-button.css");
 @import url("../blocks/popup/__close-button/popup__close-button.css");
 @import url("../blocks/popup/_active/popup_active.css");
+@import url('../blocks/popup/_disabled/popup_disabled.css');
+@import url('../blocks/forma/forma.css');
+@import url('../blocks/forma/__overlay/forma__overlay.css');
+@import url('../blocks/forma/__title/forma__title.css');
+@import url('../blocks/forma/__info/forma__info.css');
+@import url('../blocks/forma/__content/forma__content.css');
+@import url('../blocks/forma/__create-button/forma__create-button.css');
+@import url('../blocks/forma/__close-button/forma__close-button.css');
+@import url('../blocks/forma/_disabled/forma_disabled.css');
+@import url('../blocks/element/__button/_active/element__button_active.css');
+@import url('../blocks/element/__trash/element__trash.css');
+@import url('../blocks/element/__trash/_button/element__trash_button.css');
