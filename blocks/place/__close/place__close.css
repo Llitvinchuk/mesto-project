@@ -1,0 +1,15 @@
+.place__close {
+    background-image: url('../../../images/close.png');
+    position: absolute;
+  background-size: cover;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  top: -40px;
+    right: -40px;
+}
+.place__close:hover {
+  opacity: 0.6;
+}

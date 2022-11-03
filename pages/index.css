@@ -42,3 +42,13 @@
 @import url('../blocks/element/__button/_active/element__button_active.css');
 @import url('../blocks/element/__trash/element__trash.css');
 @import url('../blocks/element/__trash/_button/element__trash_button.css');
+@import url('../blocks/element/-container/element-container.css');
+@import url('../blocks/element/__like/_active/element__like_active.css');
+@import url('../blocks/place/_disabled/place_disabled.css');
+@import url('../blocks/place/place.css');
+@import url('../blocks/place/__close/place__close.css');
+@import url('../blocks/place/__image/place__image.css');
+@import url('../blocks/place/_active/place_active.css');
+@import url('../blocks/place/__overlay/place__overlay.css');
+@import url('../blocks/place/__text/place__text.css');
+@import url('../blocks/forma/_active/forma_active.css');

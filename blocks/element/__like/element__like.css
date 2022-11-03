@@ -1,3 +1,15 @@
+
+.element__like {
+  border: none;
+  background: url('/images/like.png') center no-repeat;
+  background-size: 100%;
+  cursor: pointer;
+  min-height: 19px;
+  min-width: 22px;
+  margin: 0;
+}
+
 .element__like:hover {
   opacity: 0.5;
+  transition: 0.3s;
 }

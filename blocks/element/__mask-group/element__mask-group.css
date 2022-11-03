@@ -1,7 +1,6 @@
 .element__mask-group {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin: auto 30px 32px 21px;
-  height: 100%;
+  align-items: center;
+  margin: auto 20px auto 20px;
 }

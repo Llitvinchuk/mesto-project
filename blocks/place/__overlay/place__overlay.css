@@ -1,0 +1,7 @@
+.place__overlay {
+    display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  width: fit-content;
+  position: relative;
+}
