@@ -7,6 +7,7 @@
   border: 0;
   text-align: center;
   cursor: pointer;
+  margin-top: 38px
 }
 .forma__create-button:hover {
     opacity: 0.8;
@@ -15,7 +16,6 @@
     .forma__create-button {
       max-width: 238px;
       height: 46px;
-      margin: 0 22px 25px 22px;
       font-size: 14px;
       line-height: 17px;
     }
@@ -24,7 +24,6 @@
     .forma__create-button {
       max-width: 358px;
       height: 50.15px;
-      margin: 0 36px 35px 36px;
       font-size: 18px;
       line-height: 22px;
     }

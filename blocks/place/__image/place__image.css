@@ -4,10 +4,12 @@
 @media screen and  (min-width: 320px) {
     .place__image {
       height: 299px;
+      min-width: 240px;
     }
   }
   @media screen and  (min-width: 1024px) {
     .place__image {
       height: 540px;
+      min-width: 433px;
     }
   }

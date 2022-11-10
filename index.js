@@ -1,46 +1,46 @@
-// import { initialCards } from "./data.js";
-let popupContainer = document.querySelector('.popup');
-let editButton = document.querySelector('.profile__edit-button');
-let closeButton = document.querySelector('.popup__close-button');
-let formaContainer =  document.querySelector('.forma');
-let addButton = document.querySelector('.profile__add-button')
-let closeButtonForma = document.querySelector('.forma__close-button');
-let addCards = document.querySelector('.forma__create-button')
+
+const popup = document.querySelector('.popup');
+let buttonEdit = document.querySelector('.profile__edit-button');
+let buttonClose = document.querySelector('.popup__close-button');
+let buttonAdd = document.querySelector('.profile__add-button')
+let buttonCloseForma = document.querySelector('.popup__cls-btn');
 let cardsContainer = document.querySelector('.element-container')
-let closePlace = document.querySelector('.place__close')
+let placeClose = document.querySelector('.place__close')
+const elementsTemplate = document.querySelector('#template-elements').content;
+let place = document.querySelector('.popup__place')
+let linkElement = document.querySelector('#forma-link')
+let titleElement = document.querySelector('#forma-title')
+const popupNewPlace = document.querySelector('.popup-new-place')
+const popupCreateBtn = document.querySelector('.popup__place-form')
 
-function activePopup() {
-    popupContainer.classList.add('popup_active'); 
-}
-function disabledPopup() {
-    popupContainer.classList.remove('popup_active'); 
-}
-function activeForma() {
-    formaContainer.classList.add('forma_active'); 
 
+
+function submitPlace(evt) {
+  evt.preventDefault();
+  renderCard(titleElement, linkElement);
+  closePopup(popupNewPlace);
 }
-function disabledForma() {
-    formaContainer.classList.remove('forma_active'); 
-}
-editButton.addEventListener('click', function () {
-    activePopup()
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+} 
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+} 
+buttonEdit.addEventListener('click', function () {
+  openPopup(popup)
   });
-addButton.addEventListener('click', function () {
-    activeForma()
+buttonAdd.addEventListener('click', function () {
+  openPopup(popupNewPlace)
 });
-closeButton.addEventListener('click', function () {
-    disabledPopup()
+buttonClose.addEventListener('click', function () {
+  closePopup(popup)
   });
-closeButtonForma.addEventListener('click', function () {
-    disabledForma()
+buttonCloseForma.addEventListener('click', function () {
+  closePopup(popupNewPlace)
   });
-  addCards.addEventListener(`click`, function() {
-    addnewCard()
-  })
-closePlace.addEventListener('click', function () {
-  let place = document.querySelector('.place');
+
+placeClose.addEventListener('click', function () {
   place.classList.remove(`place_active`)
-  place.classList.add(`place_disabled`)
 })
   // Находим форму в DOM
 const formElement = document.querySelector('.popup__form')// Воспользуйтесь методом querySelector()
@@ -52,7 +52,7 @@ const profTitle = document.querySelector('.profile__title');
 const profJob = document.querySelector('.profile__subtitle');
 // Обработчик «отправки» формы, хотя пока
 // она никуда отправляться не будет
-function formSubmitHandler (evt) {
+function editformSubmitHandler (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.
                                                 // О том, как это делать, расскажем позже.
@@ -60,15 +60,14 @@ function formSubmitHandler (evt) {
     // Получите значение полей jobInput и nameInput из свойства value
     profTitle.textContent = nameInput.value;
     profJob.textContent = jobInput.value;
-    nameInput.value = '';
-    jobInput.value = '';
+
     // Выберите элементы, куда должны быть вставлены значения полей
-    disabledPopup()
+    closePopup(popup)
     // Вставьте новые значения с помощью textContent
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
-formElement.addEventListener('submit', formSubmitHandler); 
+formElement.addEventListener('submit', editformSubmitHandler); 
 const initialCards = [
   {
     name: 'Архыз',
@@ -95,18 +94,20 @@ const initialCards = [
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
 ];
+popupCreateBtn.addEventListener('submit', submitPlace);
+
 function addnewCard(titleValue, imageValue) {
-  const elementsTemplate = document.querySelector('#template-elements').content;
   const cardElement = elementsTemplate.querySelector('.element').cloneNode(true);
   cardElement.querySelector('.element__title').textContent = titleValue;
 
   cardElement.querySelector('.element__image').src = imageValue;
+  cardElement.querySelector('.element__image').alt = 'image';
   cardElement.querySelector('.element__image').addEventListener(`click`, function (evt) {
-    let place = document.querySelector('.place')
+    
     place.classList.add('place_active')
     place.querySelector(`.place__image`).src = evt.target.src
 
-    place.querySelector('.place__text').innerHTML = titleValue;
+    place.querySelector('.place__text').textContent = titleValue;
   })
   cardElement.querySelector('.element__like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__like_active');
@@ -114,13 +115,15 @@ function addnewCard(titleValue, imageValue) {
 }); 
 cardElement.querySelector('.element__trash').addEventListener('click', function () {
   cardElement.remove();
-
 }); 
 
-  cardsContainer.prepend(cardElement)
-  disabledForma();
-  // добавьте songElement название песни
+ return cardElement;
+}
+function renderCard(linkElement, titleElement) {
+  cardsContainer.prepend(addnewCard(linkElement.value, titleElement.value));
+
 }
 for (let i = 0;i < initialCards.length; i++) {
-  addnewCard(initialCards[i].name, initialCards[i].link)
+  cardsContainer.prepend(addnewCard(initialCards[i].name, initialCards[i].link))
+
 }

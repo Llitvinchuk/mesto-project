@@ -49,16 +49,16 @@
       </footer>
     </div>
     <div class="popup">
-      <div class="popup__overlay">
+      <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__form" name="popup__form">
-          <fieldset class="popup__info">
             <input
               placeholder="Имя"
               class="popup__content"
               type="text"
               name="popup-title"
               id="popup-title"
+              value="Жак-Ив Кусто"
             />
             <input
               placeholder="О себе"
@@ -66,46 +66,43 @@
               type="text"
               name="popup-info"
               id="popup-info"
+              value="Исследователь океана"
             />
-          </fieldset>
           <button class="popup__submit-button" type="submit">Сохранить</button>
         </form>
         <button class="popup__close-button" type="submit"></button>
       </div>
     </div>
-    <div class="place">
+    <div class="popup popup__place">
       <div class="place__overlay">
         <img src="" class="place__image" alt="фото">
         <p class='place__text'></p>
         <button type="button" class="place__close"></button>
       </div>
     </div>
-    <div class="forma">
-      <div class="forma__overlay">
-        <h2 class="forma__title">Новое место</h2>
-        <form class="forma__form" name="forma__form">
-          <fieldset class="forma__info">
+    <div class="popup popup-new-place">
+      <div class="popup__container">
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form popup__place-form" name="forma__form">
             <input
               placeholder="Название"
-              class="forma__content"
+              class="popup__content"
               type="text"
               name="forma-title"
               id="forma-title"
             />
             <input
               placeholder="Ссылка на картинку"
-              class="forma__content"
+              class="popup__content"
               type="text"
               name="forma-info"
-              id="forma-info"
+              id="forma-link"
             />
-          </fieldset>
-          <button class="forma__create-button" type="button">Создать</button>
+          <button class="forma__create-button" type="submit">Создать</button>
         </form>
-        <button class="forma__close-button" type="submit"></button>
+        <button class="popup__close-button popup__cls-btn" type="submit"></button>
       </div>
     </div>
   </body>
   <script src="./index.js"></script>
-  <script src="./data.js"></script>
 </html>
