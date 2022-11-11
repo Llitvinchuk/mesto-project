@@ -1,15 +1,15 @@
 
-const popup = document.querySelector('.popup');
-let buttonEdit = document.querySelector('.profile__edit-button');
-let buttonClose = document.querySelector('.popup__close-button');
-let buttonAdd = document.querySelector('.profile__add-button')
-let buttonCloseForma = document.querySelector('.popup__cls-btn');
-let cardsContainer = document.querySelector('.element-container')
-let placeClose = document.querySelector('.place__close')
+const popup = document.querySelector('.popup_type_profile');
+const buttonEdit = document.querySelector('.profile__edit-button');
+const buttonClose = document.querySelector('.popup__close-button');
+const buttonAdd = document.querySelector('.profile__add-button')
+const buttonCloseForma = document.querySelector('.popup__cls-btn');
+const cardsContainer = document.querySelector('.element-container')
+const placeClose = document.querySelector('.place__close')
 const elementsTemplate = document.querySelector('#template-elements').content;
-let place = document.querySelector('.popup__place')
-let linkElement = document.querySelector('#forma-link')
-let titleElement = document.querySelector('#forma-title')
+const place = document.querySelector('.popup_type_picture')
+const linkElement = document.querySelector('#forma-link')
+const titleElement = document.querySelector('#forma-title')
 const popupNewPlace = document.querySelector('.popup-new-place')
 const popupCreateBtn = document.querySelector('.popup__place-form')
 
@@ -104,7 +104,7 @@ function addnewCard(titleValue, imageValue) {
   cardElement.querySelector('.element__image').alt = 'image';
   cardElement.querySelector('.element__image').addEventListener(`click`, function (evt) {
     
-    place.classList.add('place_active')
+    place.classList.add('place_active');
     place.querySelector(`.place__image`).src = evt.target.src
 
     place.querySelector('.place__text').textContent = titleValue;
