@@ -1,7 +1,9 @@
 const path = require("path"); // подключаем path к конфигу вебпак
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackInjector = require("html-webpack-injector");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: { main: "./src/index.js" },
@@ -32,7 +34,7 @@ module.exports = {
       },
       {
         // регулярное выражение, которое ищет все файлы с такими расширениями
-        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/,
+        test: /\.(png|svg|jpg|gif|woff(2)?|eot|ttf|otf)$/i,
         type: "asset/resource",
       },
       {
@@ -54,8 +56,15 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html", // путь к файлу index.html
+      chunks: ["main"], // подключаем созданный main.js
     }),
+    new HtmlWebpackInjector(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "src/images", to: "images" }, //to the dist root directory
+      ],
+    }),
   ],
 };

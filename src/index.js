@@ -1,4 +1,4 @@
-// import "./pages/index.css";
+import "./pages/index.css";
 const popup = document.querySelector(".popup_type_profile");
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonClose = document.querySelector(".popup__close-button");
