@@ -34,12 +34,9 @@
 @import url('../blocks/element/__trash/_button/element__trash_button.css');
 @import url('../blocks/element/-container/element-container.css');
 @import url('../blocks/element/__like/_active/element__like_active.css');
-@import url('../blocks/place/place.css');
-@import url('../blocks/place/__close/place__close.css');
-@import url('../blocks/place/__image/place__image.css');
-@import url('../blocks/place/__overlay/place__overlay.css');
-@import url('../blocks/place/__text/place__text.css');
-@import url('../blocks/place/_active/place_active.css');
+@import url('../blocks/popup/__image/popup__image.css');
+@import url('../blocks/popup/__text/popup__text.css');
+@import url('../blocks/popup/__overlay/popup__overlay.css');
 @import url('../blocks/popup/__create-button/popup__create-button.css');
 @import url('../blocks/popup/-title-error/popup-title-error.css');
 @import url('../blocks/popup/-title-error/_active/popup-title-error_active.css');

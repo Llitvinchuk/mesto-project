@@ -1,13 +1,14 @@
-function keyHandler(evt) {
-  if (evt.key === "Enter") {
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
     closePopup(document.querySelector(".popup_opened"));
   }
 }
+
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", keyHandler);
+  document.addEventListener("keydown", closeByEscape);
 }
 export function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", keyHandler);
+  document.removeEventListener("keydown", closeByEscape);
 }

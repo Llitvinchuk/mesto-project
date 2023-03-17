@@ -1,8 +1,10 @@
 export const cardsContainer = document.querySelector(".element-container");
 const elementsTemplate = document.querySelector("#template-elements").content;
-const place = document.querySelector(".popup_type_picture");
+const popupPlace = document.querySelector(".popup_type_picture");
 const linkElement = document.querySelector("#forma-link");
 const titleElement = document.querySelector("#forma-title");
+const popupPlaceImage = popupPlace.querySelector(`.popup__image`);
+const popupPlaceText = popupPlace.querySelector(".popup__text");
 
 const initialCards = [
   {
@@ -43,10 +45,10 @@ export function addnewCard(titleValue, imageValue) {
     .querySelector(".element__image")
     .addEventListener(`click`, function (evt) {
       evt.preventDefault();
-      place.classList.add("place_active");
-      place.querySelector(`.place__image`).src = evt.target.src;
-
-      place.querySelector(".place__text").textContent = titleValue;
+      popupPlace.classList.add("popup_opened");
+      popupPlaceImage.src = evt.target.src;
+      popupPlaceImage.alt = "photo";
+      popupPlaceText.textContent = titleValue;
     });
 
   cardElement

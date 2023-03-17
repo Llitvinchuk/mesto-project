@@ -1,4 +1,4 @@
-.place__overlay {
+.popup__overlay {
     display: flex;
   flex-direction: column;
   border-radius: 10px;
