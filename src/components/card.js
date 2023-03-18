@@ -1,3 +1,4 @@
+import { openPopup } from "./modal";
 export const cardsContainer = document.querySelector(".element-container");
 const elementsTemplate = document.querySelector("#template-elements").content;
 const popupPlace = document.querySelector(".popup_type_picture");
@@ -40,14 +41,14 @@ export function addnewCard(titleValue, imageValue) {
   cardElement.querySelector(".element__title").textContent = titleValue;
 
   cardElement.querySelector(".element__image").src = imageValue;
-  cardElement.querySelector(".element__image").alt = "image";
+  cardElement.querySelector(".element__image").alt = titleValue;
   cardElement
     .querySelector(".element__image")
     .addEventListener(`click`, function (evt) {
       evt.preventDefault();
-      popupPlace.classList.add("popup_opened");
+      openPopup(popupPlace);
       popupPlaceImage.src = evt.target.src;
-      popupPlaceImage.alt = "photo";
+      popupPlaceImage.alt = titleValue;
       popupPlaceText.textContent = titleValue;
     });
 
