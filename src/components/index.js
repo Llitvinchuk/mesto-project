@@ -1,9 +1,17 @@
 import "../pages/index.css";
-import { enableValidation } from "./validate.js";
-import { renderCard } from "./card.js";
+import { enableValidation, resetButton } from "./validate.js";
+import { renderCard, cardsContainer, createCards } from "./card.js";
 import { openPopup, closePopup } from "./modal.js";
+import {
+  getUserData,
+  getInitialCards,
+  editProfile,
+  addNewCard,
+  editAvatar,
+} from "./api.js";
 
 const profilePopup = document.querySelector(".popup_type_profile");
+const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
 const buttonClose = document.querySelector(".popup__close-button");
 const buttonAdd = document.querySelector(".profile__add-button");
@@ -11,26 +19,99 @@ const linkElement = document.querySelector("#forma-link");
 const titleElement = document.querySelector("#forma-title");
 const popupNewPlace = document.querySelector(".popup-new-place");
 const popupCreateBtn = document.querySelector(".popup__place-form");
-const formElement = document.querySelector(".popup__form"); // Воспользуйтесь методом querySelector()
+const formElement = document.querySelector(".popup__form-profile"); // Воспользуйтесь методом querySelector()
 const nameInput = document.querySelector("#popup-title"); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector("#popup-info");
 const profTitle = document.querySelector(".profile__title");
+const profSubtitle = document.querySelector(".profile__subtitle");
 const profJob = document.querySelector(".profile__subtitle");
+const profAvatar = document.querySelector(".profile__avatar");
 const popups = document.querySelectorAll(".popup");
+const popupAvatar = document.querySelector(".popup__avatar");
+const popupFormAvatar = document.querySelector(".popup__form-avatar");
+const avatarName = document
+  .querySelector(".popup__form-avatar")
+  .querySelector(".popup__content");
+const avatarSubmit = document.querySelector(".popup__submit-button");
+const cardSubmit = document.querySelector(".popup__submit-button");
 
-function submitPlace(evt) {
+let user = {};
+Promise.all([getUserData(), getInitialCards()])
+  .then(([dataUser, cards]) => {
+    user = dataUser;
+    profTitle.textContent = user.name;
+    profSubtitle.textContent = user.about;
+    profAvatar.src = user.avatar;
+
+    cards.reverse().forEach((data) => {
+      cardsContainer.prepend(createCards(data, user));
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
+function redactionProfile(evt) {
   evt.preventDefault();
-  renderCard(titleElement, linkElement);
-  evt.target.reset();
-  closePopup(popupNewPlace);
+  popupSubmit.textContent = "Сохранение...";
+  editProfile(nameInput.value, jobInput.value)
+    .then(() => {
+      profTitle.textContent = nameInput.value;
+      profSubtitle.textContent = jobInput.value;
+      closePopup(profilePopup);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      popupSubmit.textContent = "Сохранить";
+    });
 }
+function changeAvatar(evt) {
+  evt.preventDefault();
+  avatarSubmit.textContent = "Сохранение...";
+  const avatar = avatarName.value;
+  editAvatar(avatar)
+    .then((item) => {
+      profAvatar.src = item.avatar;
+      evt.target.reset();
+      closePopup(popupAvatar);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      avatarSubmit.textContent = "Сохранить";
+    });
+}
+function createNewCard(evt) {
+  evt.preventDefault();
+  cardSubmit.textContent = "Создание...";
+  addNewCard(linkElement.value, titleElement.value)
+    .then((data) => {
+      cardsContainer.prepend(createCards(data, user));
+      evt.target.reset();
+      closePopup(popupNewPlace);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      cardSubmit.textContent = "Создать";
+    });
+}
+
 buttonEdit.addEventListener("click", function () {
   openPopup(profilePopup);
   nameInput.value = profTitle.textContent;
   jobInput.value = profJob.textContent;
 });
+
 buttonAdd.addEventListener("click", function () {
   openPopup(popupNewPlace);
+});
+profAvatar.addEventListener("click", function () {
+  openPopup(popupAvatar);
 });
 
 const validationSetup = {
@@ -40,13 +121,6 @@ const validationSetup = {
   disabledButton: "popup__submit-button_disabled",
   titleError: "popup-title-error_active",
 };
-
-function editformSubmitHandler(evt) {
-  evt.preventDefault();
-  profTitle.textContent = nameInput.value;
-  profJob.textContent = jobInput.value;
-  closePopup(profilePopup);
-}
 
 popups.forEach((popup) => {
   popup.addEventListener("mousedown", (evt) => {
@@ -59,8 +133,10 @@ popups.forEach((popup) => {
   });
 });
 
-formElement.addEventListener("submit", editformSubmitHandler);
+formElement.addEventListener("submit", redactionProfile);
 
-popupCreateBtn.addEventListener("submit", submitPlace);
+popupCreateBtn.addEventListener("submit", createNewCard);
+
+popupFormAvatar.addEventListener("submit", changeAvatar);
 
 enableValidation(validationSetup);

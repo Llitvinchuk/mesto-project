@@ -1,75 +1,74 @@
 import { openPopup } from "./modal";
+import { deleteCard, addLike, deleteLike } from "./api.js";
 export const cardsContainer = document.querySelector(".element-container");
-const elementsTemplate = document.querySelector("#template-elements").content;
-const popupPlace = document.querySelector(".popup_type_picture");
-const linkElement = document.querySelector("#forma-link");
-const titleElement = document.querySelector("#forma-title");
-const popupPlaceImage = popupPlace.querySelector(`.popup__image`);
-const popupPlaceText = popupPlace.querySelector(".popup__text");
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
-
-export function addnewCard(titleValue, imageValue) {
+export function createCards(data, user) {
+  const elementsTemplate = document.querySelector("#template-elements").content;
   const cardElement = elementsTemplate
     .querySelector(".element")
     .cloneNode(true);
-  cardElement.querySelector(".element__title").textContent = titleValue;
+  const elementTitle = cardElement.querySelector(".element__title");
+  const elementImage = cardElement.querySelector(".element__image");
+  const elementTrash = cardElement.querySelector(".element__trash");
 
-  cardElement.querySelector(".element__image").src = imageValue;
-  cardElement.querySelector(".element__image").alt = titleValue;
-  cardElement
-    .querySelector(".element__image")
-    .addEventListener(`click`, function (evt) {
-      evt.preventDefault();
-      openPopup(popupPlace);
-      popupPlaceImage.src = evt.target.src;
-      popupPlaceImage.alt = titleValue;
-      popupPlaceText.textContent = titleValue;
-    });
+  const elementLike = cardElement.querySelector(".element__like");
+  const likeCounter = cardElement.querySelector(".element__like-counter");
+  const popupPlace = document.querySelector(".popup_type_picture");
+  const popupPlaceImage = popupPlace.querySelector(`.popup__image`);
+  const popupPlaceText = popupPlace.querySelector(".popup__text");
+  const likes = data.likes.length;
 
-  cardElement
-    .querySelector(".element__like")
-    .addEventListener("click", function (evt) {
-      evt.target.classList.toggle("element__like_active");
-    });
-  cardElement
-    .querySelector(".element__trash")
-    .addEventListener("click", function () {
-      cardElement.remove();
-    });
+  likeCounter.textContent = likes;
+  elementTitle.textContent = data.name;
 
+  elementImage.src = data.link;
+  elementImage.alt = data.name;
+
+  if (user !== data.owner._id) {
+    elementTrash.remove();
+  }
+
+  data.likes.forEach((like) => {
+    if (like._id === user) {
+      elementLike.classList.add("element__like_active");
+    }
+  });
+  elementImage.addEventListener(`click`, function (evt) {
+    openPopup(popupPlace);
+    popupPlaceImage.src = data.link;
+    popupPlaceImage.alt = data.name;
+    popupPlaceText.textContent = data.name;
+  });
+
+  elementLike.addEventListener("click", function () {
+    if (elementLike.classList.contains("element__like_active")) {
+      deleteLike(data)
+        .then((data) => {
+          likeCounter.textContent = data.likes.length;
+          elementLike.classList.remove("element__like_active");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      addLike(data)
+        .then((data) => {
+          likeCounter.textContent = data.likes.length;
+          elementLike.classList.add("element__like_active");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  });
+  elementTrash.addEventListener("click", function (e) {
+    deleteCard(data)
+      .then(() => {
+        cardElement.remove();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  });
   return cardElement;
-}
-export function renderCard(linkElement, titleElement) {
-  cardsContainer.prepend(addnewCard(linkElement.value, titleElement.value));
-}
-for (let i = 0; i < initialCards.length; i++) {
-  cardsContainer.prepend(
-    addnewCard(initialCards[i].name, initialCards[i].link)
-  );
 }

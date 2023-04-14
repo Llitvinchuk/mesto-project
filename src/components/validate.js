@@ -1,6 +1,8 @@
 const showInputError = (formElement, popupContent, errorMessage, settings) => {
   const errorElement = formElement.querySelector(`.${popupContent.id}-error`);
+
   errorElement.textContent = errorMessage;
+
   errorElement.classList.add(settings.titleError);
 };
 
@@ -73,3 +75,7 @@ export const enableValidation = (settings) => {
     setEventListeners(formElement, settings);
   });
 };
+export function resetButton(button) {
+  button.disabled = true;
+  button.classList.add("disabled");
+}
