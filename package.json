@@ -7,7 +7,7 @@
     "build": "rm -rf dist && webpack",
     "dev": "webpack serve",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist -b gh-pages-deploy"
+    "deploy": "gh-pages -d dist -b gh-pages"
   },
   "repository": {
     "type": "git",

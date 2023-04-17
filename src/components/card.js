@@ -43,7 +43,7 @@ export function createCards(data, user) {
   }
 
   data.likes.forEach((like) => {
-    if (like._id === user) {
+    if (like._id === user._id) {
       elementLike.classList.add("element__like_active");
     }
   });
