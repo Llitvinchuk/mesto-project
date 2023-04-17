@@ -46,7 +46,7 @@ export const addNewCard = (link, name) => {
 };
 
 export const deleteCard = (card) => {
-  return fetch(`${config.baseUrl}/cards/${card}`, {
+  return fetch(`${config.baseUrl}/cards/${card._id}`, {
     method: "DELETE",
     headers: config.headers,
   }).then(checkReply);

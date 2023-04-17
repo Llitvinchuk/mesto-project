@@ -2,6 +2,11 @@ import { openPopup } from "./modal";
 import { deleteCard, addLike, deleteLike } from "./api.js";
 export const cardsContainer = document.querySelector(".element-container");
 
+function cancelCard(card) {
+  const element = card.closest(".element");
+  element.remove();
+}
+
 export function createCards(data, user) {
   const elementsTemplate = document.querySelector("#template-elements").content;
   const cardElement = elementsTemplate
@@ -10,7 +15,6 @@ export function createCards(data, user) {
   const elementTitle = cardElement.querySelector(".element__title");
   const elementImage = cardElement.querySelector(".element__image");
   const elementTrash = cardElement.querySelector(".element__trash");
-
   const elementLike = cardElement.querySelector(".element__like");
   const likeCounter = cardElement.querySelector(".element__like-counter");
   const popupPlace = document.querySelector(".popup_type_picture");
@@ -24,8 +28,18 @@ export function createCards(data, user) {
   elementImage.src = data.link;
   elementImage.alt = data.name;
 
-  if (user !== data.owner._id) {
-    elementTrash.remove();
+  if (user._id === data.owner._id) {
+    elementTrash.classList.add("element__trash_active");
+
+    elementTrash.addEventListener("click", function () {
+      deleteCard(data._id)
+        .then(() => {
+          cancelCard(elementTrash);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
   }
 
   data.likes.forEach((like) => {
