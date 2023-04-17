@@ -6,7 +6,6 @@ function cancelCard(card) {
   const element = card.closest(".element");
   element.remove();
 }
-
 export function createCards(data, user) {
   const elementsTemplate = document.querySelector("#template-elements").content;
   const cardElement = elementsTemplate
