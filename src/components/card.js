@@ -16,7 +16,7 @@ class Card {
   generate() {
     this._element = super._getElement();
     const elementTitle = cardElement.querySelector(".element__title");
-    const elementImage = cardElement.querySelector(".element__image");
+    const elementImage = this._element.querySelector(".element__image");
     const elementTrash = this._element.querySelector(".element__trash");
     const elementLike = this._element.querySelector(".element__like");
     const likeCounter = cardElement.querySelector(".element__like-counter");
@@ -26,7 +26,7 @@ class Card {
     const likes = data.likes.length;
     this._element.id = this._data._id;
 
-    if (user._id === data.owner._id) {
+    if (this._user._id === this._data.owner._id) {
       elementTrash.classList.add("element__trash_active");
 
       elementTrash.addEventListener("click", function (evt) {
