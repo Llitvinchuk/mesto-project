@@ -1,76 +1,89 @@
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
-  headers: {
-    authorization: "828dfec4-4859-48aa-a7be-cfe17041058c",
-    "Content-Type": "application/json",
-  },
-};
+//****************Загрузка с сервера***********************************
+import {authorization} from '../utils/constanta.js';
 
-const checkReply = (res) => {
-  if (res.ok) {
-    return res.json();
-  }
-  return Promise.reject(`Ошибка: ${res.status}`);
-};
+export const authorization = '6ad1c47f-6af4-42c4-b56f-bacd15588390';//ID Михаил
 
-export const getUserData = () => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    headers: config.headers,
-  }).then(checkReply);
-};
-export const getInitialCards = () => {
-  return fetch(`${config.baseUrl}/cards`, {
-    headers: config.headers,
-  }).then(checkReply);
-};
-export const editProfile = (name, about) => {
-  return fetch(`${config.baseUrl}/users/me`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      about: about,
-    }),
-  }).then(checkReply);
-};
 
-export const addNewCard = (link, name) => {
-  return fetch(`${config.baseUrl}/cards`, {
-    method: "POST",
-    headers: config.headers,
-    body: JSON.stringify({
-      name: name,
-      link: link,
-    }),
-  }).then(checkReply);
-};
+export default class Api{
+	constructor(fetchUrl, method){
+		this._url = fetchUrl;
+		this._method = method;		
+	}
 
-export const deleteCard = (card) => {
-  return fetch(`${config.baseUrl}/cards/${card._id}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkReply);
-};
-export const addLike = (card) => {
-  return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
-    method: "PUT",
-    headers: config.headers,
-  }).then(checkReply);
-};
+	_serverSending(){
+		return fetch('https://mesto.nomoreparties.co/v1/plus-cohort-23' + this._url, {
+			method: this._method,
+	    headers: {
+	      authorization: authorization
+	    }
+  	})
+  	.then(res =>{
+    if(res.ok){
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
+  	})
+	}
 
-export const deleteLike = (card) => {
-  return fetch(`${config.baseUrl}/cards/likes/${card._id}`, {
-    method: "DELETE",
-    headers: config.headers,
-  }).then(checkReply);
-};
+	_sendingAvatar(element){
+		this._element = element;
+		return fetch('https://mesto.nomoreparties.co/v1/plus-cohort-23' + this._url, {
+			method: this._method,
+	    headers: {
+	      authorization: authorization,
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({
+      	avatar: this._element.target.avatarImage.value 
+  		})
+  	})
+  	.then(res =>{
+	    if(res.ok){
+	      return res.json();
+	    }
+	    return Promise.reject(`Ошибка: ${res.status}`);
+	  })
+	}
 
-export const editAvatar = (photo) => {
-  return fetch(`${config.baseUrl}/users/me/avatar`, {
-    method: "PATCH",
-    headers: config.headers,
-    body: JSON.stringify({
-      avatar: photo,
-    }),
-  }).then(checkReply);
-};
+	_sendingProfile(element){
+		this._element = element;
+		return fetch('https://mesto.nomoreparties.co/v1/plus-cohort-23' + this._url, {
+			method: this._method,
+	    headers: {
+	      authorization: authorization,
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({
+      	name: this._element.target.name.value,
+      	about: this._element.target.description.value
+  		})
+  	})
+  	.then(res =>{
+	    if(res.ok){
+	      return res.json();
+	    }
+	    return Promise.reject(`Ошибка: ${res.status}`);
+	  })
+	}
+
+	_sendingCard(element){
+		this._element = element;
+		return fetch('https://mesto.nomoreparties.co/v1/plus-cohort-23' + this._url, {
+			method: this._method,
+	    headers: {
+	      authorization: authorization,
+	      'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({
+      	name: this._element.target.placeName.value,
+      	link: this._element.target.placeImage.value
+  		})
+  	})
+  	.then(res =>{
+	    if(res.ok){
+	      return res.json();
+	    }
+	    return Promise.reject(`Ошибка: ${res.status}`);
+	  })
+	}
+}
