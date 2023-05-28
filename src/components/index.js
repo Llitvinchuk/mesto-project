@@ -9,6 +9,7 @@ import {
   addNewCard,
   editAvatar,
 } from "./api.js";
+import Api from "../components/api.js";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -34,6 +35,14 @@ const avatarName = document
   .querySelector(".popup__content");
 const avatarSubmit = document.querySelector(".popup__submit-button");
 const cardSubmit = document.querySelector(".popup__submit-button");
+
+const api = new Api({
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
+  headers: {
+    authorization: "828dfec4-4859-48aa-a7be-cfe17041058c",
+    "Content-Type": "application/json",
+  },
+});
 
 let user = {};
 Promise.all([getUserData(), getInitialCards()])

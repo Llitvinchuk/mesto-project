@@ -2,16 +2,17 @@ import { openPopup } from "./modal";
 import { deleteCard, addLike, deleteLike } from "./api.js";
 export const cardsContainer = document.querySelector(".element-container");
 
-class Card {
-  constructor(data) {
-    this.data = data;
+export default class Card {
+  constructor(data, userId) {
+    this._id = data._id; // id карточки
+    this._ownerId = data.owner._id; // id создателя карточки
+    this._userId = userId;
   }
   _getElement() {
-    const elementsTemplate = document
+    this._elementsTemplate = document
       .querySelector("#template-elements")
       .content.querySelector(".element")
       .cloneNode(true);
-    return elementsTemplate;
   }
   generate() {
     this._element = super._getElement();
@@ -24,10 +25,11 @@ class Card {
     const popupPlaceImage = this._element.querySelector(`.popup__image`);
     const popupPlaceText = this._element.querySelector(".popup__text");
     const likes = data.likes.length;
-    this._element.id = this._data._id;
 
-    if (this._user._id === this._data.owner._id) {
-      elementTrash.classList.add("element__trash_active");
+    if (this._userId === this._ownerId) {
+      this._elementsTemplate
+        .querySelector(".element__trash")
+        .classList.add("element__trash_active");
 
       elementTrash.addEventListener("click", function (evt) {
         deleteCard(this._data._id)
@@ -73,16 +75,19 @@ class Card {
           });
       }
     });
-    elementTrash.addEventListener("click", function (e) {
-      deleteCard(data)
-        .then(() => {
-          cardElement.remove();
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    });
     return cardElement;
+  }
+  handleRemoveCard() {
+    this._elementsTemplate.closest(".element").remove();
+    // elementTrash.addEventListener("click", function (e) {
+    //   deleteCard(data)
+    //     .then(() => {
+    //       cardElement.remove();
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //     });
+    // });
   }
 }
 
