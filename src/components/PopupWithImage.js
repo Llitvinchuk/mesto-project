@@ -2,14 +2,17 @@ import { Popup } from "./Popup";
 const popupPlaceImage = document.querySelector(".popup__image");
 const popupPlaceText = popupPlace.querySelector(".popup__text");
 
-class PopupWithImage extends Popup {
-  constructor(selector) {
+export class PopupWithImage extends Popup {
+  constructor(data, selector) {
     super(selector);
+    this._link = data.link;
+    this._alt = data.alt;
+    this._name = data.name;
   }
   open() {
     super.open();
-    popupPlaceImage.src = data.link;
-    popupPlaceImage.alt = data.name;
-    popupPlaceText.textContent = data.name;
+  }
+  close() {
+    super.close();
   }
 }

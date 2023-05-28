@@ -5,6 +5,7 @@ export class Popup {
   constructor(selector) {
     this._selector = selector;
   }
+  _getElement() {}
   open() {
     popupElement.classList.add("popup_opened");
   }
