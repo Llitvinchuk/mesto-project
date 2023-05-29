@@ -25,19 +25,14 @@ export default class Card {
   render() {
     this._getElement();
     this._elementImage =
-      this._elementsTemplate.querySelector(".element__image");
+    this._elementsTemplate.querySelector(".element__image");
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
-      this._name;
-    // const elementTrash = this._element.querySelector(".element__trash");
-    // const elementLike = this._element.querySelector(".element__like");
+    this._name;
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
-      this._likes.length;
-    // const popupPlace = document.querySelector(".popup_type_picture");
-    // const popupPlaceImage = this._element.querySelector(`.popup__image`);
-    // const popupPlaceText = this._element.querySelector(".popup__text");
-    // const likes = data.likes.length;
+    this._likes.length;
+    
     if (this._userId === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")

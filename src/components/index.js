@@ -3,7 +3,11 @@ import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
+
+
 import FormValidator from "./util/FormValidator";
+
+
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -136,7 +140,7 @@ popupCreateBtn.addEventListener("submit", createNewCard);
 
 popupFormAvatar.addEventListener("submit", changeAvatar);
 
-//enableValidation(validationSetup);
-//подключаю новую валидацию
 
-const Validat = new FormValidator(ValidationSettings)._enableValidation();
+
+//подключаю новую валидацию
+const Validat = new FormValidator(validationSetup)._enableValidation();
