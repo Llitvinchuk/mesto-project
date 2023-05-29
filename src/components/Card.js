@@ -28,7 +28,6 @@ export default class Card {
 
   render() {
     console.log(`🚀 ~ render ~ this:`, this);
-
     // this._getElement();
     // this._elementImage =
     //   this._elementsTemplate.querySelector(".element__image");
@@ -45,12 +44,10 @@ export default class Card {
     // // const popupPlaceImage = this._element.querySelector(`.popup__image`);
     // // const popupPlaceText = this._element.querySelector(".popup__text");
     // // const likes = data.likes.length;
-
     // if (this._userId === this._ownerId) {
     //   this._elementsTemplate
     //     .querySelector(".element__trash")
     //     .classList.add("element__trash_active");
-
     //   this._elementsTemplate
     //     .querySelector(".element__trash")
     //     .addEventListener("click", function (evt) {
@@ -64,7 +61,6 @@ export default class Card {
     //         });
     //     });
     // }
-
     // this._data.likes.forEach((like) => {
     //   if (like._id === user._id) {
     //     elementLike.classList.add("element__like_active");
@@ -76,7 +72,6 @@ export default class Card {
     //   popupPlaceImage.alt = this._data.name;
     //   popupPlaceText.textContent = this._data.name;
     // });
-
     // return this._elementsTemplate;
   }
 

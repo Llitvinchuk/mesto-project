@@ -10,7 +10,7 @@ import { enableValidation, resetButton } from "./validate.js";
 //   editAvatar,
 // } from "./api.js";
 import Api from "./Api.js";
-import Card from "./card";
+import Card from "./Card";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
