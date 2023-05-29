@@ -6,6 +6,8 @@ import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
 
 import Validate from "./util/Validate";
+import { PopupWithForm } from "./PopupWithForm";
+import { Popup } from "./Popup";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -44,19 +46,16 @@ const api = new Api({
 const cardList = new Section({ api, selector: ".element-container" });
 cardList.render();
 
-const popupWithImage = new PopupWithImage(popupImage);
-popupWithImage.setEventListeners();
-
-let user = {};
-
-function redactionProfile(evt) {
-  evt.preventDefault();
+function editProfile(data, popup) {
   popupSubmit.textContent = "Сохранение...";
-  editProfile(nameInput.value, jobInput.value)
-    .then(() => {
-      profTitle.textContent = nameInput.value;
-      profSubtitle.textContent = jobInput.value;
-      closePopup(profilePopup);
+
+  api
+    .editProfile({ name: data["popup-title"], about: data["popup-info"] })
+    .then((res) => {
+      profTitle.textContent = res.name;
+      profSubtitle.textContent = res.about;
+
+      popup.close();
     })
     .catch((err) => {
       console.error(err);
@@ -65,6 +64,13 @@ function redactionProfile(evt) {
       popupSubmit.textContent = "Сохранить";
     });
 }
+
+const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
+
+const popupWithImage = new PopupWithImage(popupImage);
+popupWithImage.setEventListeners();
+
+let user = {};
 
 function changeAvatar(evt) {
   evt.preventDefault();
@@ -102,7 +108,8 @@ function createNewCard(evt) {
 }
 
 buttonEdit.addEventListener("click", function () {
-  openPopup(profilePopup);
+  popupTypeProfile.open();
+
   nameInput.value = profTitle.textContent;
   jobInput.value = profJob.textContent;
 });
@@ -133,11 +140,11 @@ popups.forEach((popup) => {
   });
 });
 
-formElement.addEventListener("submit", redactionProfile);
-
-popupCreateBtn.addEventListener("submit", createNewCard);
-
-popupFormAvatar.addEventListener("submit", changeAvatar);
+const callback = () => {
+  // formElement.addEventListener("submit", redactionProfile);
+  // popupCreateBtn.addEventListener("submit", createNewCard);
+  // popupFormAvatar.addEventListener("submit", changeAvatar);
+};
 
 //enableValidation(validationSetup);
 //подключаю новую валидацию
