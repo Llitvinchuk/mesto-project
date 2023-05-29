@@ -5,7 +5,7 @@
 import Api from "./Api";
 
 export default class Card {
-  constructor(data, userId) {
+  constructor(data, userId, handleCardClick) {
     console.log(`🚀 ~ constructor ~ data:`, data);
     this._api = new Api({
       baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
@@ -14,6 +14,7 @@ export default class Card {
         "Content-Type": "application/json",
       },
     });
+    this._handleCardClick = handleCardClick;
 
     this._id = data._id; // id карточки
     this._ownerId = data.owner._id; // id создателя карточки
@@ -74,14 +75,17 @@ export default class Card {
     //     elementLike.classList.add("element__like_active");
     //   }
     // });
-    // elementImage.addEventListener(`click`, function (evt) {
-    //   openPopup(popupPlace);
-    //   popupPlaceImage.src = this._data.link;
-    //   popupPlaceImage.alt = this._data.name;
-    //   popupPlaceText.textContent = this._data.name;
-    // });
 
-    // return this._elementsTemplate;
+
+    return this._elementsTemplate;
+  }
+  _setEventListeners() {
+    this._elementsTemplate.querySelector(".element__image").addEventListener(`click`, () => {
+      this._handleCardClick({
+        name: this._name,
+        link: this._link
+      });
+    });
   }
 
   handleLikeCard() {

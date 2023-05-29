@@ -3,7 +3,7 @@ import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api.js";
 import Card from "./Card";
 
-import Validate from './utils/Validate.js';
+import Validate from './util/Validate';
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
