@@ -5,8 +5,7 @@ import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
 
-import Validate from './util/Validate';
-import Card from "./sdfsdCard";
+import Validate from "./util/Validate";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -53,29 +52,11 @@ const getUserData = () => ({});
 
 const items = [];
 
-const cardList = new Section('.element-container');
-
+const cardList = new Section(api, ".element-container");
 cardList.renderItems();
 
-const popupWithImage = new PopupWithImage(popupImage)
-popupWithImage.setEventListeners()
-
-Promise.all([getUserData(), getInitialCards])
-  .then(([dataUser, cards]) => {
-    user = dataUser;
-    profTitle.textContent = user.name;
-    profSubtitle.textContent = user.about;
-    profAvatar.src = user.avatar;
-
-    cards.reverse().forEach((data) => {
-      const card = new Card(data, 4);
-      card.render();
-      // cardsContainer.prepend(createCards(data, user));
-    });
-  })
-  .catch((err) => {
-    console.error(err);
-  });
+const popupWithImage = new PopupWithImage(popupImage);
+popupWithImage.setEventListeners();
 
 let user = {};
 
@@ -95,6 +76,7 @@ function redactionProfile(evt) {
       popupSubmit.textContent = "Сохранить";
     });
 }
+
 function changeAvatar(evt) {
   evt.preventDefault();
   avatarSubmit.textContent = "Сохранение...";
@@ -112,6 +94,7 @@ function changeAvatar(evt) {
       avatarSubmit.textContent = "Сохранить";
     });
 }
+
 function createNewCard(evt) {
   evt.preventDefault();
   cardSubmit.textContent = "Создание...";
@@ -167,9 +150,7 @@ popupCreateBtn.addEventListener("submit", createNewCard);
 
 popupFormAvatar.addEventListener("submit", changeAvatar);
 
-
-
 //enableValidation(validationSetup);
 //подключаю новую валидацию
 
-const Validat = new Validate(ValidationSettings)._enableValidation();
+// const Validat = new Validate(ValidationSettings)._enableValidation();
