@@ -9,7 +9,9 @@ export default class Card {
 
     this._id = data._id;
     this._ownerId = data.owner._id;
+    console.log(`🚀 ~ constructor ~ this._ownerId:`, this._ownerId);
     this._userId = userId;
+    console.log(`🚀 ~ constructor ~ this._userId :`, this._userId);
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
@@ -30,14 +32,9 @@ export default class Card {
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
       this._name;
-    // const elementTrash = this._element.querySelector(".element__trash");
-    // const elementLike = this._element.querySelector(".element__like");
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
       this._likes.length;
-    // const popupPlace = document.querySelector(".popup_type_picture");
-    // const popupPlaceImage = this._element.querySelector(`.popup__image`);
-    // const popupPlaceText = this._element.querySelector(".popup__text");
-    // const likes = data.likes.length;
+
     if (this._userId === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")
@@ -115,6 +112,20 @@ export default class Card {
           });
       }
     });
+  }
+  handleRemoveCard() {
+    this._elementsTemplate
+      .querySelector(".element__trash")
+      .addEventListener("click", () => {
+        this._api
+          .deleteCard(this._id)
+          .then(() => {
+            this._elementsTemplate.closest(".elements__card").remove();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
   }
 }
 

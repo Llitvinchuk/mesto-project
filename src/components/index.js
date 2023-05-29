@@ -71,7 +71,6 @@ let user = {};
 
 function changeAvatar(evt) {
   evt.preventDefault();
-  console.log(`🚀 ~ changeAvatar ~ data:`, data);
   avatarSubmit.textContent = "Сохранение...";
   const avatar = avatarName.value;
   api
@@ -88,6 +87,8 @@ function changeAvatar(evt) {
       avatarSubmit.textContent = "Сохранить";
     });
 }
+
+// const changePopupAvatar = new PopupWithForm(".profile__avatar", changeAvatar);
 
 function createNewCard(data, popup) {
   cardSubmit.textContent = "Создание...";
@@ -118,7 +119,7 @@ buttonAdd.addEventListener("click", function () {
   createCard.open();
 });
 profAvatar.addEventListener("click", function () {
-  popupChangeAvatar.open();
+  changePopupAvatar.open();
 });
 
 const validationSetup = {
