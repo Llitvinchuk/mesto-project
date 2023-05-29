@@ -1,14 +1,8 @@
 import Api from "./Api";
 
 export default class Card {
-  constructor({ data, userId, handleCardClick, container }) {
-    this._api = new Api({
-      baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
-      headers: {
-        authorization: "828dfec4-4859-48aa-a7be-cfe17041058c",
-        "Content-Type": "application/json",
-      },
-    });
+  constructor({ data, userId, handleCardClick, container, api }) {
+    this._api = new Api();
     this._handleCardClick = handleCardClick;
     this.container = container;
 
@@ -44,23 +38,26 @@ export default class Card {
     // const popupPlaceImage = this._element.querySelector(`.popup__image`);
     // const popupPlaceText = this._element.querySelector(".popup__text");
     // const likes = data.likes.length;
-    // if (this._userId === this._ownerId) {
-    //   this._elementsTemplate
-    //     .querySelector(".element__trash")
-    //     .classList.add("element__trash_active");
-    //   this._elementsTemplate
-    //     .querySelector(".element__trash")
-    //     .addEventListener("click", function (evt) {
-    //       this._api
-    //         .deleteCard(this._id)
-    //         .then(() => {
-    //           evt.target.closest(".element").remove();
-    //         })
-    //         .catch((err) => {
-    //           console.error(err);
-    //         });
-    //     });
-    //     }
+    if (this._userId === this._ownerId) {
+      this._elementsTemplate
+        .querySelector(".element__trash")
+        .classList.add("element__trash_active");
+
+      this._elementsTemplate
+        .querySelector(".element__trash")
+        .addEventListener("click", (evt) => {
+          this._api
+            .deleteCard(this._id)
+            .then(() => {
+              evt.target.closest(".element").remove();
+            })
+            .catch((err) => {
+              console.error(err);
+            });
+        });
+    }
+
+    this.handleLikeCard();
 
     this.container.append(this._elementsTemplate);
 
@@ -86,24 +83,13 @@ export default class Card {
       });
   }
 
-  _setEventListeners() {
-    this._elementsTemplate
-      .querySelector(".element__image")
-      .addEventListener(`click`, () => {
-        this._handleCardClick({
-          name: this._name,
-          link: this._link,
-        });
-      });
-  }
-
   handleLikeCard() {
     const elementLike = this._elementsTemplate.querySelector(".element__like");
     const likeCounter = this._elementsTemplate.querySelector(
       ".element__like-counter"
     );
 
-    elementLike.addEventListener("click", function () {
+    elementLike.addEventListener("click", () => {
       if (elementLike.classList.contains("element__like_active")) {
         this._api
           .deleteLike(this._id)

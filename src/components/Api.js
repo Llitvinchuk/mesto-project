@@ -6,25 +6,29 @@ const config = {
   },
 };
 export default class Api {
-  constructor(options) {
+  constructor(options = config) {
     this._options = options;
   }
+
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
   }
+
   getUserData() {
     return fetch(`${this._options.baseUrl}/users/me`, {
       headers: this._options.headers,
     }).then(this._checkResponse);
   }
+
   getInitialCards() {
     return fetch(`${this._options.baseUrl}/cards`, {
       headers: this._options.headers,
     }).then(this._checkResponse);
   }
+
   editProfile(userData) {
     return fetch(`${this._options.baseUrl}/users/me`, {
       method: "PATCH",
@@ -32,6 +36,7 @@ export default class Api {
       body: JSON.stringify(newUserInfo),
     }).then(this._checkResponse);
   }
+
   addNewCard(data) {
     return fetch(`${this._options.baseUrl}/cards/`, {
       method: "POST",
@@ -42,18 +47,21 @@ export default class Api {
       }),
     }).then(this._checkResponse);
   }
+
   addLike(id) {
     return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
       method: "PUT",
       headers: this._options.headers,
     }).then(this._checkResponse);
   }
+
   deleteLike(id) {
     return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
       method: "DELETE",
       headers: this._options.headers,
     }).then(this._checkResponse);
   }
+
   editAvatar(avatarUrl) {
     return fetch(`${this._options.baseUrl}/users/me/avatar`, {
       method: "PATCH",
@@ -61,6 +69,7 @@ export default class Api {
       body: JSON.stringify({ avatar: avatarUrl }),
     }).then(this._getResponseData);
   }
+
   deleteCard(id) {
     return fetch(`${this._options.baseUrl}/cards/${id}`, {
       method: "delete",

@@ -2,9 +2,9 @@ import Api from "./Api";
 import Card from "./Card";
 
 export default class Section {
-  constructor(api, containerSelector) {
-    this.api = api;
-    this._container = document.querySelector(containerSelector);
+  constructor({ api, selector }) {
+    this._api = new Api();
+    this._container = document.querySelector(selector);
   }
 
   addItem(element) {
@@ -15,17 +15,20 @@ export default class Section {
     this._container.innerHTML = "";
   }
 
-  renderItems() {
+  render() {
     this._clear();
 
-    this.api?.getInitialCards().then((data) => {
+    this._api?.getInitialCards().then((data) => {
       if (!data?.length) {
         return;
       }
 
       for (const item of data) {
-        console.log(`🚀 ~ this.api?.getInitialCards ~ item:`, item);
-        const card = new Card({ data: item, container: this._container });
+        const card = new Card({
+          data: item,
+          container: this._container,
+          api: this._api,
+        });
         const cardElement = card.render();
         this.addItem(cardElement);
       }

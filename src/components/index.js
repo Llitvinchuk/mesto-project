@@ -31,7 +31,6 @@ const avatarName = document
   .querySelector(".popup__content");
 const avatarSubmit = document.querySelector(".popup__submit-button");
 const cardSubmit = document.querySelector(".popup__submit-button");
-const cardContainer = ".element-container";
 const popupImage = ".popup_type_picture";
 
 const api = new Api({
@@ -42,18 +41,8 @@ const api = new Api({
   },
 });
 
-const getInitialCards = api
-  .getInitialCards()
-  .then((data) => data)
-  .catch((error) => {
-    console.error(error);
-  });
-const getUserData = () => ({});
-
-const items = [];
-
-const cardList = new Section(api, ".element-container");
-cardList.renderItems();
+const cardList = new Section({ api, selector: ".element-container" });
+cardList.render();
 
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
