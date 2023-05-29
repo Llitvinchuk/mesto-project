@@ -1,6 +1,6 @@
 import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
-import Api from "./Api.js";
+import Api from "./hhdjddjApi.js";
 import Card from "./Card";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
