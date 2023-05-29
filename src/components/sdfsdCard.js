@@ -1,9 +1,8 @@
-
 import Api from "./Api";
 
 export default class Card {
   constructor(data, userId, handleCardClick) {
-    console.log(`🚀 ~ constructor ~ data:`, data);
+
     this._api = new Api({
       baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
       headers: {

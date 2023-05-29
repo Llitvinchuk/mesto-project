@@ -1,11 +1,12 @@
 import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
-import Api from "./Api.js/index.js";
-import Card from "./Card";
+import Api from "./Api";
+
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
 
 import Validate from './util/Validate';
+import Card from "./sdfsdCard";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -52,14 +53,9 @@ const getUserData = () => ({});
 
 const items = [];
 
-// const cardList = new Section({
-//   renderer: (item) => {
-//     const card = new Card(item, ".template-elements");
-//     const cardElement = card.render();
-//     cardList.addItem(cardElement)
-//   }
-// }, cardContainer);
-// console.log(`🚀 ~ cardList:`, cardList)
+const cardList = new Section('.element-container');
+
+cardList.renderItems();
 
 const popupWithImage = new PopupWithImage(popupImage)
 popupWithImage.setEventListeners()
