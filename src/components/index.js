@@ -5,7 +5,8 @@ import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
 
 import FormValidator from "./util/FormValidator";
-
+import UserInfo from "./UserInfo";
+import { PopupWithForm } from "./PopupWithForm";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -49,9 +50,10 @@ function editProfile(data, popup) {
 
   api
     .editProfile({ name: data["popup-title"], about: data["popup-info"] })
-    .then((res) => {
-      profTitle.textContent = res.name;
-      profSubtitle.textContent = res.about;
+    .then((data) => {
+      userInfo.setUserInfo(data);
+      // profTitle.textContent = res.name;
+      // profSubtitle.textContent = res.about;
 
       popup.close();
     })
@@ -68,18 +70,25 @@ const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
+const userInfo = new UserInfo({
+  selectorName: ".profile__title",
+  selectorInfo: ".profile__subtitle",
+  selectorAvatar: ".profile__avatar",
+});
+
 let user = {};
 
-function changeAvatar(evt) {
-  evt.preventDefault();
+function changeAvatar(evt, popup) {
   avatarSubmit.textContent = "Сохранение...";
   const avatar = avatarName.value;
+
   api
     .editAvatar(avatar)
     .then((item) => {
-      profAvatar.src = item.avatar;
-      evt.target.reset();
+      userInfo.setUserAvatar(item);
+      // profAvatar.src = item.avatar;
       popup.close();
+      // evt.target.reset();
     })
     .catch((err) => {
       console.error(err);
@@ -89,7 +98,7 @@ function changeAvatar(evt) {
     });
 }
 
-// const changePopupAvatar = new PopupWithForm(".profile__avatar", changeAvatar);
+const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar);
 
 function createNewCard(data, popup) {
   cardSubmit.textContent = "Создание...";
@@ -141,14 +150,6 @@ const validationSetup = {
 //     }
 //   });
 // });
-
-const callback = () => {
-  // formElement.addEventListener("submit", redactionProfile);
-  // popupCreateBtn.addEventListener("submit", createNewCard);
-  // popupFormAvatar.addEventListener("submit", changeAvatar);
-};
-
-
 
 //подключаю новую валидацию
 const Validat = new FormValidator(validationSetup)._enableValidation();

@@ -9,9 +9,9 @@ export default class Card {
 
     this._id = data._id;
     this._ownerId = data.owner._id;
-    console.log(`🚀 ~ constructor ~ this._ownerId:`, this._ownerId);
+
     this._userId = userId;
-    console.log(`🚀 ~ constructor ~ this._userId :`, this._userId);
+
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
@@ -27,15 +27,13 @@ export default class Card {
   render() {
     this._getElement();
     this._elementImage =
-    this._elementsTemplate.querySelector(".element__image");
+      this._elementsTemplate.querySelector(".element__image");
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
-
-    this._name;
+      this._name;
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
-    this._likes.length;
-    
+      this._likes.length;
 
     if (this._userId === this._ownerId) {
       this._elementsTemplate
