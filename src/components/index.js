@@ -1,12 +1,9 @@
 import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api";
-
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
-
-import Validate from "./util/Validate";
-
+import FormValidator from "./util/FormValidator";
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -142,4 +139,4 @@ popupFormAvatar.addEventListener("submit", changeAvatar);
 //enableValidation(validationSetup);
 //подключаю новую валидацию
 
-// const Validat = new Validate(ValidationSettings)._enableValidation();
+const Validat = new FormValidator(ValidationSettings)._enableValidation();
