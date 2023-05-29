@@ -42,14 +42,14 @@ export default class Api {
       }),
     }).then(this._checkResponse);
   }
-  addLike(cardId) {
-    return fetch(`${this._options.baseUrl}/cards/likes/${cardId}`, {
+  addLike(id) {
+    return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
       method: "PUT",
       headers: this._options.headers,
     }).then(this._checkResponse);
   }
-  deleteLike(cardId) {
-    return fetch(`${this._options.baseUrl}/cards/likes/${cardId}`, {
+  deleteLike(id) {
+    return fetch(`${this._options.baseUrl}/cards/likes/${id}`, {
       method: "DELETE",
       headers: this._options.headers,
     }).then(this._checkResponse);
