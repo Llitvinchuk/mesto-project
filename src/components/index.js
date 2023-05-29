@@ -1,14 +1,5 @@
 import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
-// import { renderCard, cardsContainer, createCards } from "./card.js";
-// import { openPopup, closePopup } from "./modal.js";
-// import {
-//   getUserData,
-//   getInitialCards,
-//   editProfile,
-//   addNewCard,
-//   editAvatar,
-// } from "./api.js";
 import Api from "./Api.js";
 import Card from "./Card";
 
@@ -44,11 +35,16 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
-const card = new Card({ title: "", _id: 5, owner: { _id: 5 } }, 4);
-card.render();
 
-let user = {};
-Promise.all([getUserData(), getInitialCards()])
+const getInitialCards = api
+  .getInitialCards()
+  .then((data) => data)
+  .catch((error) => {
+    console.error(error);
+  });
+const getUserData = () => ({});
+
+Promise.all([getUserData(), getInitialCards])
   .then(([dataUser, cards]) => {
     user = dataUser;
     profTitle.textContent = user.name;
@@ -56,12 +52,16 @@ Promise.all([getUserData(), getInitialCards()])
     profAvatar.src = user.avatar;
 
     cards.reverse().forEach((data) => {
-      cardsContainer.prepend(createCards(data, user));
+      const card = new Card(data, 4);
+      card.render();
+      // cardsContainer.prepend(createCards(data, user));
     });
   })
   .catch((err) => {
     console.error(err);
   });
+
+let user = {};
 
 function redactionProfile(evt) {
   evt.preventDefault();
