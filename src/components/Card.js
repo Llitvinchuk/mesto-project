@@ -1,18 +1,20 @@
 import Api from "./Api";
+import { PopupWithImage } from "./PopupWithImage";
 
 export default class Card {
   constructor({ data, userId, handleCardClick, container, api }) {
     this._api = new Api();
-    this._handleCardClick = handleCardClick;
+
     this.container = container;
 
     this._id = data._id;
     this._ownerId = data.owner._id;
+    console.log(`🚀 ~ constructor ~ this._ownerId:`, this._ownerId);
     this._userId = userId;
+    console.log(`🚀 ~ constructor ~ this._userId :`, this._userId);
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
-    this._handleCardClick = handleCardClick;
   }
 
   _getElement() {
@@ -29,10 +31,17 @@ export default class Card {
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
+<<<<<<< HEAD
     this._name;
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
     this._likes.length;
     
+=======
+      this._name;
+    this._elementsTemplate.querySelector(".element__like-counter").textContent =
+      this._likes.length;
+
+>>>>>>> fe8c7b56f7319efb3951e5e4bd905933f58f81a1
     if (this._userId === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")
@@ -64,10 +73,6 @@ export default class Card {
       }
     });
 
-    return this._elementsTemplate;
-  }
-
-  _setEventListeners() {
     this._elementsTemplate
       .querySelector(".element__image")
       .addEventListener(`click`, () => {
@@ -76,6 +81,13 @@ export default class Card {
           link: this._link,
         });
       });
+
+    return this._elementsTemplate;
+  }
+
+  _handleCardClick({ name, link }) {
+    const popupWithImage = new PopupWithImage();
+    popupWithImage.open({ name, link });
   }
 
   handleLikeCard() {
@@ -107,6 +119,20 @@ export default class Card {
           });
       }
     });
+  }
+  handleRemoveCard() {
+    this._elementsTemplate
+      .querySelector(".element__trash")
+      .addEventListener("click", () => {
+        this._api
+          .deleteCard(this._id)
+          .then(() => {
+            this._elementsTemplate.closest(".elements__card").remove();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
   }
 }
 

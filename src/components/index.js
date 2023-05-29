@@ -3,11 +3,17 @@ import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
+<<<<<<< HEAD
 
 
 import FormValidator from "./util/FormValidator";
 
 
+=======
+import { PopupWithForm } from "./PopupWithForm";
+import FormValidator from "./util/FormValidator";
+
+>>>>>>> fe8c7b56f7319efb3951e5e4bd905933f58f81a1
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -45,19 +51,16 @@ const api = new Api({
 const cardList = new Section({ api, selector: ".element-container" });
 cardList.render();
 
-const popupWithImage = new PopupWithImage(popupImage);
-popupWithImage.setEventListeners();
-
-let user = {};
-
-function redactionProfile(evt) {
-  evt.preventDefault();
+function editProfile(data, popup) {
   popupSubmit.textContent = "Сохранение...";
-  editProfile(nameInput.value, jobInput.value)
-    .then(() => {
-      profTitle.textContent = nameInput.value;
-      profSubtitle.textContent = jobInput.value;
-      closePopup(profilePopup);
+
+  api
+    .editProfile({ name: data["popup-title"], about: data["popup-info"] })
+    .then((res) => {
+      profTitle.textContent = res.name;
+      profSubtitle.textContent = res.about;
+
+      popup.close();
     })
     .catch((err) => {
       console.error(err);
@@ -67,15 +70,23 @@ function redactionProfile(evt) {
     });
 }
 
+const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
+
+const popupWithImage = new PopupWithImage(popupImage);
+popupWithImage.setEventListeners();
+
+let user = {};
+
 function changeAvatar(evt) {
   evt.preventDefault();
   avatarSubmit.textContent = "Сохранение...";
   const avatar = avatarName.value;
-  editAvatar(avatar)
+  api
+    .editAvatar(avatar)
     .then((item) => {
       profAvatar.src = item.avatar;
       evt.target.reset();
-      closePopup(popupAvatar);
+      popup.close();
     })
     .catch((err) => {
       console.error(err);
@@ -85,14 +96,16 @@ function changeAvatar(evt) {
     });
 }
 
-function createNewCard(evt) {
-  evt.preventDefault();
+// const changePopupAvatar = new PopupWithForm(".profile__avatar", changeAvatar);
+
+function createNewCard(data, popup) {
   cardSubmit.textContent = "Создание...";
-  addNewCard(linkElement.value, titleElement.value)
+  api
+    .addNewCard({ name: data["forma-title"], link: data["forma-info"] })
     .then((data) => {
-      cardsContainer.prepend(createCards(data, user));
+      cardList.render();
+      popup.close();
       evt.target.reset();
-      closePopup(popupNewPlace);
     })
     .catch((err) => {
       console.error(err);
@@ -101,18 +114,20 @@ function createNewCard(evt) {
       cardSubmit.textContent = "Создать";
     });
 }
+const createCard = new PopupWithForm(".popup-new-place", createNewCard);
 
 buttonEdit.addEventListener("click", function () {
-  openPopup(profilePopup);
+  popupTypeProfile.open();
+
   nameInput.value = profTitle.textContent;
   jobInput.value = profJob.textContent;
 });
 
 buttonAdd.addEventListener("click", function () {
-  openPopup(popupNewPlace);
+  createCard.open();
 });
 profAvatar.addEventListener("click", function () {
-  openPopup(popupAvatar);
+  changePopupAvatar.open();
 });
 
 const validationSetup = {
@@ -123,22 +138,22 @@ const validationSetup = {
   titleError: "popup-title-error_active",
 };
 
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close")) {
-      closePopup(popup);
-    }
-  });
-});
+// popups.forEach((popup) => {
+//   popup.addEventListener("mousedown", (evt) => {
+//     if (evt.target.classList.contains("popup_opened")) {
+//       closePopup(popup);
+//     }
+//     if (evt.target.classList.contains("popup__close")) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
-formElement.addEventListener("submit", redactionProfile);
-
-popupCreateBtn.addEventListener("submit", createNewCard);
-
-popupFormAvatar.addEventListener("submit", changeAvatar);
+const callback = () => {
+  // formElement.addEventListener("submit", redactionProfile);
+  // popupCreateBtn.addEventListener("submit", createNewCard);
+  // popupFormAvatar.addEventListener("submit", changeAvatar);
+};
 
 
 

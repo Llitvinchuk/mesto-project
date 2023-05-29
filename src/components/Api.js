@@ -33,7 +33,7 @@ export default class Api {
     return fetch(`${this._options.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._options.headers,
-      body: JSON.stringify(newUserInfo),
+      body: JSON.stringify(userData),
     }).then(this._checkResponse);
   }
 
