@@ -3,17 +3,10 @@ import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
-<<<<<<< HEAD
-
 
 import FormValidator from "./util/FormValidator";
 
 
-=======
-import { PopupWithForm } from "./PopupWithForm";
-import FormValidator from "./util/FormValidator";
-
->>>>>>> fe8c7b56f7319efb3951e5e4bd905933f58f81a1
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
