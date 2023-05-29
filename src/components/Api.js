@@ -30,7 +30,6 @@ export default class Api {
   }
 
   editProfile(userData) {
-    console.log(`🚀 ~ editProfile ~ userData:`, userData);
     return fetch(`${this._options.baseUrl}/users/me`, {
       method: "PATCH",
       headers: this._options.headers,

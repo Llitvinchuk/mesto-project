@@ -71,13 +71,15 @@ let user = {};
 
 function changeAvatar(evt) {
   evt.preventDefault();
+  console.log(`🚀 ~ changeAvatar ~ data:`, data);
   avatarSubmit.textContent = "Сохранение...";
   const avatar = avatarName.value;
-  editAvatar(avatar)
+  api
+    .editAvatar(avatar)
     .then((item) => {
       profAvatar.src = item.avatar;
       evt.target.reset();
-      closePopup(popupAvatar);
+      popup.close();
     })
     .catch((err) => {
       console.error(err);
@@ -87,14 +89,14 @@ function changeAvatar(evt) {
     });
 }
 
-function createNewCard(evt) {
-  evt.preventDefault();
+function createNewCard(data, popup) {
   cardSubmit.textContent = "Создание...";
-  addNewCard(linkElement.value, titleElement.value)
+  api
+    .addNewCard({ name: data["forma-title"], link: data["forma-info"] })
     .then((data) => {
-      cardsContainer.prepend(createCards(data, user));
+      cardList.render();
+      popup.close();
       evt.target.reset();
-      closePopup(popupNewPlace);
     })
     .catch((err) => {
       console.error(err);
@@ -103,6 +105,7 @@ function createNewCard(evt) {
       cardSubmit.textContent = "Создать";
     });
 }
+const createCard = new PopupWithForm(".popup-new-place", createNewCard);
 
 buttonEdit.addEventListener("click", function () {
   popupTypeProfile.open();
@@ -112,10 +115,10 @@ buttonEdit.addEventListener("click", function () {
 });
 
 buttonAdd.addEventListener("click", function () {
-  openPopup(popupNewPlace);
+  createCard.open();
 });
 profAvatar.addEventListener("click", function () {
-  openPopup(popupAvatar);
+  popupChangeAvatar.open();
 });
 
 const validationSetup = {
@@ -126,16 +129,16 @@ const validationSetup = {
   titleError: "popup-title-error_active",
 };
 
-popups.forEach((popup) => {
-  popup.addEventListener("mousedown", (evt) => {
-    if (evt.target.classList.contains("popup_opened")) {
-      closePopup(popup);
-    }
-    if (evt.target.classList.contains("popup__close")) {
-      closePopup(popup);
-    }
-  });
-});
+// popups.forEach((popup) => {
+//   popup.addEventListener("mousedown", (evt) => {
+//     if (evt.target.classList.contains("popup_opened")) {
+//       closePopup(popup);
+//     }
+//     if (evt.target.classList.contains("popup__close")) {
+//       closePopup(popup);
+//     }
+//   });
+// });
 
 const callback = () => {
   // formElement.addEventListener("submit", redactionProfile);

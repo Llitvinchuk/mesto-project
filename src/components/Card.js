@@ -1,9 +1,10 @@
 import Api from "./Api";
+import { PopupWithImage } from "./PopupWithImage";
 
 export default class Card {
   constructor({ data, userId, handleCardClick, container, api }) {
     this._api = new Api();
-    this._handleCardClick = handleCardClick;
+
     this.container = container;
 
     this._id = data._id;
@@ -12,7 +13,6 @@ export default class Card {
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
-    this._handleCardClick = handleCardClick;
   }
 
   _getElement() {
@@ -69,10 +69,6 @@ export default class Card {
       }
     });
 
-    return this._elementsTemplate;
-  }
-
-  _setEventListeners() {
     this._elementsTemplate
       .querySelector(".element__image")
       .addEventListener(`click`, () => {
@@ -81,6 +77,13 @@ export default class Card {
           link: this._link,
         });
       });
+
+    return this._elementsTemplate;
+  }
+
+  _handleCardClick({ name, link }) {
+    const popupWithImage = new PopupWithImage();
+    popupWithImage.open({ name, link });
   }
 
   handleLikeCard() {
