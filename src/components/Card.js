@@ -11,6 +11,7 @@ export default class Card {
     this._ownerId = data.owner._id;
 
     this._userId = userId;
+    console.log(`🚀 ~ constructor ~ this._userId:`, this._userId);
 
     this._name = data.name;
     this._likes = data.likes;

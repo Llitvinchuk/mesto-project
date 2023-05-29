@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { enableValidation, resetButton } from "./validate.js";
+
 import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
@@ -8,31 +8,20 @@ import FormValidator from "./util/FormValidator";
 import UserInfo from "./UserInfo";
 import { PopupWithForm } from "./PopupWithForm";
 
-const profilePopup = document.querySelector(".popup_type_profile");
-const popupSubmit = document.querySelector(".popup__submit-button");
-const buttonEdit = document.querySelector(".profile__edit-button");
-const buttonClose = document.querySelector(".popup__close-button");
-const buttonAdd = document.querySelector(".profile__add-button");
-const linkElement = document.querySelector("#forma-link");
-const titleElement = document.querySelector("#forma-title");
-const popupNewPlace = document.querySelector(".popup-new-place");
-const popupCreateBtn = document.querySelector(".popup__place-form");
-const formElement = document.querySelector(".popup__form-profile"); // Воспользуйтесь методом querySelector()
-const nameInput = document.querySelector("#popup-title"); // Воспользуйтесь инструментом .querySelector()
-const jobInput = document.querySelector("#popup-info");
-const profTitle = document.querySelector(".profile__title");
-const profSubtitle = document.querySelector(".profile__subtitle");
-const profJob = document.querySelector(".profile__subtitle");
-const profAvatar = document.querySelector(".profile__avatar");
-const popups = document.querySelectorAll(".popup");
-const popupAvatar = document.querySelector(".popup__avatar");
-const popupFormAvatar = document.querySelector(".popup__form-avatar");
-const avatarName = document
-  .querySelector(".popup__form-avatar")
-  .querySelector(".popup__content");
-const avatarSubmit = document.querySelector(".popup__submit-button");
-const cardSubmit = document.querySelector(".popup__submit-button");
-const popupImage = ".popup_type_picture";
+import {
+  popupSubmit,
+  buttonEdit,
+  buttonAdd,
+  nameInput,
+  jobInput,
+  profTitle,
+  profJob,
+  profAvatar,
+  avatarName,
+  avatarSubmit,
+  cardSubmit,
+  popupImage,
+} from "./util/constans";
 
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
