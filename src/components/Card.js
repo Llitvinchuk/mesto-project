@@ -31,17 +31,12 @@ export default class Card {
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
-<<<<<<< HEAD
+
     this._name;
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
     this._likes.length;
     
-=======
-      this._name;
-    this._elementsTemplate.querySelector(".element__like-counter").textContent =
-      this._likes.length;
 
->>>>>>> fe8c7b56f7319efb3951e5e4bd905933f58f81a1
     if (this._userId === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")
