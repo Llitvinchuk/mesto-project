@@ -1,6 +1,3 @@
-// import { openPopup } from "./modal";
-// import { deleteCard, addLike, deleteLike } from "./api.js";
-// export const cardsContainer = document.querySelector(".element-container");
 
 import Api from "./Api";
 
@@ -22,6 +19,7 @@ export default class Card {
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
+    this._handleCardClick = handleCardClick;
   }
 
   _getElement() {
@@ -39,7 +37,6 @@ export default class Card {
     this._elementImage.alt = this._name;
     this._elementsTemplate.querySelector(".element__title").textContent =
       this._name;
-    // const elementImage = this._element.querySelector(".element__image");
     // const elementTrash = this._element.querySelector(".element__trash");
     // const elementLike = this._element.querySelector(".element__like");
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
@@ -70,11 +67,12 @@ export default class Card {
 
     parentContainer.append(this._elementsTemplate);
 
-    // this._data.likes.forEach((like) => {
-    //   if (like._id === user._id) {
-    //     elementLike.classList.add("element__like_active");
-    //   }
-    // });
+    this._likes.forEach((like) => {
+      if (this._likes === this._userId) {
+        this._elementsTemplate.querySelector(".element__like").classList.add("element__like_active");
+      }
+    });
+
 
 
     return this._elementsTemplate;
@@ -87,7 +85,14 @@ export default class Card {
       });
     });
   }
-
+  _setEventListeners() {
+    this._elementsTemplate.querySelector(".element__image").addEventListener(`click`, () => {
+      this._handleCardClick({
+        name: this._name,
+        link: this._link
+      });
+    });
+  }
   handleLikeCard() {
     const elementLike = this._elementsTemplate.querySelector(".element__like");
     console.log(`🚀 ~ handleLikeCard ~ elementLike:`, elementLike)
@@ -118,19 +123,20 @@ export default class Card {
     });
   }
 
-  //   handleRemoveCard() {
-  //     this._elementsTemplate.closest(".element").remove();
-  //     // elementTrash.addEventListener("click", function (e) {
-  //     //   deleteCard(data)
-  //     //     .then(() => {
-  //     //       cardElement.remove();
-  //     //     })
-  //     //     .catch((err) => {
-  //     //       console.error(err);
-  //     //     });
-  //     // });
-  //   }
-  // }
+
+  handleRemoveCard() {
+    this._elementsTemplate
+      .querySelector(".element__trash").addEventListener("click", function (e) {
+        this._api.deleteCard(this._id)
+          .then(() => {
+            this._elementsTemplate.closest(".element").remove();
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
+  }
+}
 
   // function cancelCard(card) {
   //   const element = card.closest(".element");
@@ -215,4 +221,4 @@ export default class Card {
   //       });
   //   });
   //   return cardElement;
-}
+// }

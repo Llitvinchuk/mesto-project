@@ -61,8 +61,8 @@ export default class Api {
       body: JSON.stringify({ avatar: avatarUrl }),
     }).then(this._getResponseData);
   }
-  deleteCard(cardId) {
-    return fetch(`${this._options.baseUrl}/cards/${cardId}`, {
+  deleteCard(id) {
+    return fetch(`${this._options.baseUrl}/cards/${id}`, {
       method: "delete",
       headers: this._options.headers,
     }).then(this._getResponseData);

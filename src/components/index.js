@@ -2,6 +2,8 @@ import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
 import Api from "./Api.js";
 import Card from "./Card";
+import Section from "./Section";
+import { PopupWithImage } from "./PopupWithImage";
 
 import Validate from './util/Validate';
 
@@ -29,6 +31,8 @@ const avatarName = document
   .querySelector(".popup__content");
 const avatarSubmit = document.querySelector(".popup__submit-button");
 const cardSubmit = document.querySelector(".popup__submit-button");
+const cardContainer = ".element-container";
+const popupImage = ".popup_type_picture";
 
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
@@ -45,6 +49,20 @@ const getInitialCards = api
     console.error(error);
   });
 const getUserData = () => ({});
+
+const items = [];
+
+// const cardList = new Section({
+//   renderer: (item) => {
+//     const card = new Card(item, ".template-elements");
+//     const cardElement = card.render();
+//     cardList.addItem(cardElement)
+//   }
+// }, cardContainer);
+// console.log(`🚀 ~ cardList:`, cardList)
+
+const popupWithImage = new PopupWithImage(popupImage)
+popupWithImage.setEventListeners()
 
 Promise.all([getUserData(), getInitialCards])
   .then(([dataUser, cards]) => {
