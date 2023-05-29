@@ -1,5 +1,5 @@
 
-import Api from "./hhdjddjApi";
+import Api from "./Api";
 
 export default class Card {
   constructor(data, userId, handleCardClick) {
