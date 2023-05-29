@@ -11,6 +11,8 @@ import {
 } from "./api.js";
 import Api from "../components/api.js";
 
+import Validate from './utils/Validate.js';
+
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
 const buttonEdit = document.querySelector(".profile__edit-button");
@@ -148,4 +150,9 @@ popupCreateBtn.addEventListener("submit", createNewCard);
 
 popupFormAvatar.addEventListener("submit", changeAvatar);
 
-enableValidation(validationSetup);
+
+
+//enableValidation(validationSetup);
+//подключаю новую валидацию
+
+const Validat = new Validate(ValidationSettings)._enableValidation();
