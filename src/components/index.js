@@ -1,15 +1,16 @@
 import "../pages/index.css";
 import { enableValidation, resetButton } from "./validate.js";
-import { renderCard, cardsContainer, createCards } from "./card.js";
-import { openPopup, closePopup } from "./modal.js";
-import {
-  getUserData,
-  getInitialCards,
-  editProfile,
-  addNewCard,
-  editAvatar,
-} from "./api.js";
-import Api from "../components/api.js";
+// import { renderCard, cardsContainer, createCards } from "./card.js";
+// import { openPopup, closePopup } from "./modal.js";
+// import {
+//   getUserData,
+//   getInitialCards,
+//   editProfile,
+//   addNewCard,
+//   editAvatar,
+// } from "./api.js";
+import Api from "./Api.js";
+import Card from "./card";
 
 const profilePopup = document.querySelector(".popup_type_profile");
 const popupSubmit = document.querySelector(".popup__submit-button");
@@ -43,6 +44,8 @@ const api = new Api({
     "Content-Type": "application/json",
   },
 });
+const card = new Card({ title: "", _id: 5, owner: { _id: 5 } }, 4);
+card.render();
 
 let user = {};
 Promise.all([getUserData(), getInitialCards()])
