@@ -9,7 +9,6 @@ import UserInfo from "./UserInfo";
 import { PopupWithForm } from "./PopupWithForm";
 
 import {
-  popupSubmit,
   buttonEdit,
   buttonAdd,
   nameInput,
@@ -18,11 +17,11 @@ import {
   profJob,
   profAvatar,
   avatarName,
-  avatarSubmit,
-  cardSubmit,
   popupImage,
   validationSetup,
+  containerElements,
 } from "./util/constans";
+
 import Card from "./Card";
 
 const api = new Api({
@@ -39,19 +38,42 @@ const userInfo = new UserInfo({
   selectorAvatar: ".profile__avatar",
 });
 
-api.getUserData().then((data) => {
-  userInfo.setUserInfo(data);
-});
+const onCardClick = (data) => () => popupWithImage.open(data);
 
-const cardList = new Section({
-  api,
-  selector: ".element-container",
-  me: userInfo,
-});
-cardList.render();
+const createNewCards = (data) => {
+  const card = new Card({
+    data: data,
+    api,
+    userId,
+    handleCardClick: onCardClick(data),
+    handleLikeCard: (_) => card.handleLikeCard(),
+    handleDeleteCard: (_) => {
+      api
+        .deleteCard(data._id)
+        .then((_) => {
+          card.handleRemoveCard();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
+  });
+
+  return card;
+};
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      const card = createNewCards(item);
+      const cardElement = card.render();
+      cardList.addItem(cardElement);
+    },
+  },
+  containerElements
+);
 
 function editProfile(data, popup) {
-  popupSubmit.textContent = "Сохранение...";
+  popupTypeProfile.setLoading(true);
 
   api
     .editProfile({ name: data["popup-title"], about: data["popup-info"] })
@@ -64,7 +86,7 @@ function editProfile(data, popup) {
       console.error(err);
     })
     .finally(() => {
-      popupSubmit.textContent = "Сохранить";
+      popupTypeProfile.setLoading(false);
     });
 }
 
@@ -73,10 +95,9 @@ const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
-let user = {};
-
 function changeAvatar(evt, popup) {
-  avatarSubmit.textContent = "Сохранение...";
+  changePopupAvatar.setLoading(true);
+
   const avatar = avatarName.value;
 
   api
@@ -90,26 +111,29 @@ function changeAvatar(evt, popup) {
       console.error(err);
     })
     .finally(() => {
-      avatarSubmit.textContent = "Сохранить";
+      changePopupAvatar.setLoading(false);
     });
 }
 
 const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar);
 
 function createNewCard(data, popup) {
-  cardSubmit.textContent = "Создание...";
+  createCard.setLoading(true);
+
   api
     .addNewCard({ name: data["forma-title"], link: data["forma-info"] })
     .then((data) => {
-      cardList.render();
+      const card = createNewCards(data);
+      const cardElement = card.render();
+      cardList.addItem(cardElement);
+
       popup.close();
-      evt.target.reset();
     })
     .catch((err) => {
       console.error(err);
     })
     .finally(() => {
-      cardSubmit.textContent = "Создать";
+      createCard.setLoading(false);
     });
 }
 const createCard = new PopupWithForm(".popup-new-place", createNewCard);
@@ -128,17 +152,15 @@ profAvatar.addEventListener("click", function () {
   changePopupAvatar.open();
 });
 
+let userId;
 
-// popups.forEach((popup) => {
-//   popup.addEventListener("mousedown", (evt) => {
-//     if (evt.target.classList.contains("popup_opened")) {
-//       closePopup(popup);
-//     }
-//     if (evt.target.classList.contains("popup__close")) {
-//       closePopup(popup);
-//     }
-//   });
-// });
+Promise.all([api.getInitialCards(), api.getUserData()])
+  .then(([cards, userData]) => {
+    userInfo.setUserInfo(userData);
+    userId = userData._id;
+    cardList.render(cards);
+  })
+  .catch((err) => console.log(err));
 
 //подключаю новую валидацию
 const Validat = new FormValidator(validationSetup)._enableValidation();

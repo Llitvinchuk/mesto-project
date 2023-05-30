@@ -89,11 +89,9 @@
       <div class="popup__overlay">
         <img src="" class="popup__image" alt="фото" />
         <p class="popup__text"></p>
-        <button type="button" class="popup_
-        _close-button popup__close"></button>
+        <button type="button" class="popup__close-button popup__close"></button>
       </div>
     </div>
-
 
     <div class="popup popup-new-place">
       <div class="popup__container popup__place-container">
@@ -119,15 +117,14 @@
             name="forma-info"
             id="forma-link"
             required
+            data-error-message="Введите ссылку на картинку."
           />
-          <span class="popup-error forma--error"></span>
+          <span class="popup-error forma-link-error"></span>
           <button class="popup__submit-button" type="submit">Создать</button>
         </form>
         <button class="popup__close-button popup__close" type="submit"></button>
       </div>
     </div>
-
-
 
     <div class="popup popup__avatar">
       <div class="popup__container">
@@ -144,6 +141,7 @@
             id="forma-link"
             placeholder="Ссылка на картинку"
             required
+            data-error-message="Введите ссылку на картинку."
           />
           <span class="popup-error forma-link-error"></span>
           <button class="popup__submit-button" type="submit">Сохранить</button>
@@ -151,10 +149,6 @@
         <button class="popup__close-button popup__close" type="button"></button>
       </div>
     </div>
-
-
-
-
 
     <template id="template-elements">
       <div class="element">

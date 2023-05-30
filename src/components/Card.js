@@ -1,13 +1,18 @@
-import Api from "./Api";
-import { PopupWithImage } from "./PopupWithImage";
-
 export default class Card {
-  constructor({ data, me, handleCardClick, container, api }) {
-    this._api = new Api();
+  constructor({
+    data,
+    userId,
+    handleCardClick,
+    handleLikeCard,
+    handleDeleteCard,
+    api,
+  }) {
+    this._api = api;
 
-    this._me = me;
-
-    this.container = container;
+    this._userId = userId;
+    this._handleCardClick = handleCardClick;
+    this._handleLikeCard = handleLikeCard;
+    this._handleDeleteCard = handleDeleteCard;
     this._id = data._id;
     this._ownerId = data.owner._id;
     this._name = data.name;
@@ -33,36 +38,17 @@ export default class Card {
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
       this._likes.length;
 
-    if (this._me?.data?._id === this._ownerId) {
+    if (this._userId === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")
         .classList.add("element__trash_active");
-
-      this._elementsTemplate
-        .querySelector(".element__trash")
-        .addEventListener("click", (evt) => {
-          this._api
-            .deleteCard(this._id)
-            .then(() => {
-              evt.target.closest(".element").remove();
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        });
     }
 
-    this.handleLikeCard();
-
-    // this.container.append(this._elementsTemplate);
-
-    // this._likes.forEach((like) => {
-    //   if (this._likes === this._userId) {
-    //     this._elementsTemplate
-    //       .querySelector(".element__like")
-    //       .classList.add("element__like_active");
-    //   }
-    // });
+    if (this._likes.find((obj) => this._userId === obj._id)) {
+      this._elementsTemplate
+        .querySelector(".element__like")
+        .classList.add("element__like_active");
+    }
 
     this._elementsTemplate
       .querySelector(".element__image")
@@ -73,12 +59,18 @@ export default class Card {
         });
       });
 
-    return this._elementsTemplate;
-  }
+    this._elementsTemplate
+      .querySelector(".element__like")
+      .addEventListener("click", () => {
+        this._handleLikeCard();
+      });
+    this._elementsTemplate
+      .querySelector(".element__trash")
+      .addEventListener("click", () => {
+        this._handleDeleteCard();
+      });
 
-  _handleCardClick({ name, link }) {
-    const popupWithImage = new PopupWithImage();
-    popupWithImage.open({ name, link });
+    return this._elementsTemplate;
   }
 
   handleLikeCard() {
@@ -87,42 +79,29 @@ export default class Card {
       ".element__like-counter"
     );
 
-    elementLike.addEventListener("click", () => {
-      if (elementLike.classList.contains("element__like_active")) {
-        this._api
-          .deleteLike(this._id)
-          .then((data) => {
-            likeCounter.textContent = data.likes.length;
-            elementLike.classList.remove("element__like_active");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else {
-        this._api
-          .addLike(this._id)
-          .then((data) => {
-            likeCounter.textContent = data.likes.length;
-            elementLike.classList.add("element__like_active");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }
-    });
+    if (elementLike.classList.contains("element__like_active")) {
+      this._api
+        .deleteLike(this._id)
+        .then((data) => {
+          likeCounter.textContent = data.likes.length;
+          elementLike.classList.remove("element__like_active");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      this._api
+        .addLike(this._id)
+        .then((data) => {
+          likeCounter.textContent = data.likes.length;
+          elementLike.classList.add("element__like_active");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   }
   handleRemoveCard() {
-    this._elementsTemplate
-      .querySelector(".element__trash")
-      .addEventListener("click", () => {
-        this._api
-          .deleteCard(this._id)
-          .then(() => {
-            this._elementsTemplate.closest(".elements__card").remove();
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      });
+    this._elementsTemplate.remove();
   }
 }
