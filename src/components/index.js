@@ -23,6 +23,7 @@ import {
   popupImage,
   validationSetup,
 } from "./util/constans";
+import Card from "./Card";
 
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-23",
