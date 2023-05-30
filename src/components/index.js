@@ -120,7 +120,7 @@ function createNewCard(data, popup) {
       const card = createNewCards(data);
       const cardElement = card.render();
       cardList.addItem(cardElement);
-      // cardList.render();
+
       popup.close();
     })
     .catch((err) => {
