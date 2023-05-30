@@ -9,7 +9,6 @@ import UserInfo from "./UserInfo";
 import { PopupWithForm } from "./PopupWithForm";
 
 import {
-  popupSubmit,
   buttonEdit,
   buttonAdd,
   nameInput,
@@ -18,13 +17,11 @@ import {
   profJob,
   profAvatar,
   avatarName,
-  avatarSubmit,
-  cardSubmit,
   popupImage,
   validationSetup,
-  cardSelector,
   containerElements,
 } from "./util/constans";
+
 import Card from "./Card";
 
 const api = new Api({
@@ -41,18 +38,25 @@ const userInfo = new UserInfo({
   selectorAvatar: ".profile__avatar",
 });
 
-api.getUserData().then((data) => {
-  userInfo.setUserInfo(data);
-});
 const onCardClick = (data) => () => popupWithImage.open(data);
 
 const createNewCards = (data) => {
   const card = new Card({
-    api,
     data: data,
-    me: userInfo,
-    cardSelector: cardSelector,
+    api,
+    userId,
     handleCardClick: onCardClick(data),
+    handleLikeCard: (_) => card.handleLikeCard(),
+    handleDeleteCard: (_) => {
+      api
+        .deleteCard(data._id)
+        .then((_) => {
+          card.handleRemoveCard();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    },
   });
 
   return card;
@@ -69,7 +73,7 @@ const cardList = new Section(
 );
 
 function editProfile(data, popup) {
-  popupSubmit.textContent = "Сохранение...";
+  popupTypeProfile.setLoading(true);
 
   api
     .editProfile({ name: data["popup-title"], about: data["popup-info"] })
@@ -82,7 +86,7 @@ function editProfile(data, popup) {
       console.error(err);
     })
     .finally(() => {
-      popupSubmit.textContent = "Сохранить";
+      popupTypeProfile.setLoading(false);
     });
 }
 
@@ -92,7 +96,8 @@ const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
 function changeAvatar(evt, popup) {
-  avatarSubmit.textContent = "Сохранение...";
+  changePopupAvatar.setLoading(true);
+
   const avatar = avatarName.value;
 
   api
@@ -106,14 +111,15 @@ function changeAvatar(evt, popup) {
       console.error(err);
     })
     .finally(() => {
-      avatarSubmit.textContent = "Сохранить";
+      changePopupAvatar.setLoading(false);
     });
 }
 
 const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar);
 
 function createNewCard(data, popup) {
-  cardSubmit.textContent = "Создание...";
+  createCard.setLoading(true);
+
   api
     .addNewCard({ name: data["forma-title"], link: data["forma-info"] })
     .then((data) => {
@@ -127,7 +133,7 @@ function createNewCard(data, popup) {
       console.error(err);
     })
     .finally(() => {
-      cardSubmit.textContent = "Создать";
+      createCard.setLoading(false);
     });
 }
 const createCard = new PopupWithForm(".popup-new-place", createNewCard);
@@ -146,12 +152,12 @@ profAvatar.addEventListener("click", function () {
   changePopupAvatar.open();
 });
 
-let me;
+let userId;
 
 Promise.all([api.getInitialCards(), api.getUserData()])
   .then(([cards, userData]) => {
     userInfo.setUserInfo(userData);
-    me = userData._id;
+    userId = userData._id;
     cardList.render(cards);
   })
   .catch((err) => console.log(err));

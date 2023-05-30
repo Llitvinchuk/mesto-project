@@ -5,11 +5,6 @@ export class Popup {
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
-  _getElement() {
-    this._element = document.querySelector(this._selector);
-    return this._element;
-  }
-
   open() {
     this._popupElement.classList.add("popup_opened");
     document.addEventListener("keyup", this._handleEscClose);

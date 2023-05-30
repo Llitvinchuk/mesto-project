@@ -15,6 +15,6 @@ export default class Section {
 
   render(arr) {
     this._clear();
-    arr.forEach((item) => this._renderer(item));
+    arr.reverse().forEach((item) => this._renderer(item));
   }
 }

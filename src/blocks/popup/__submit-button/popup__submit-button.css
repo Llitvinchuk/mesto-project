@@ -9,7 +9,7 @@
   cursor: pointer;
   min-height: 50px;
   text-align: center;
-  margin-top: 38px;
+  margin-top: 24px;
 }
 .popup__submit-button:hover {
   opacity: 0.8;
@@ -20,7 +20,7 @@
     height: 46px;
     font-size: 14px;
     line-height: 17px;
-    margin-bottom: 0
+    margin-bottom: 0;
   }
 }
 @media screen and (min-width: 768px) {
