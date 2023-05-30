@@ -22,6 +22,8 @@ import {
   cardSubmit,
   popupImage,
   validationSetup,
+  cardSelector,
+  containerElements,
 } from "./util/constans";
 import Card from "./Card";
 
@@ -42,13 +44,29 @@ const userInfo = new UserInfo({
 api.getUserData().then((data) => {
   userInfo.setUserInfo(data);
 });
+const onCardClick = (data) => () => popupWithImage.open(data);
 
-const cardList = new Section({
-  api,
-  selector: ".element-container",
-  me: userInfo,
-});
-cardList.render();
+const createNewCards = (data) => {
+  const card = new Card({
+    api,
+    data: data,
+    me: userInfo,
+    cardSelector: cardSelector,
+    handleCardClick: onCardClick(data),
+  });
+
+  return card;
+};
+const cardList = new Section(
+  {
+    renderer: (item) => {
+      const card = createNewCards(item);
+      const cardElement = card.render();
+      cardList.addItem(cardElement);
+    },
+  },
+  containerElements
+);
 
 function editProfile(data, popup) {
   popupSubmit.textContent = "Сохранение...";
@@ -72,8 +90,6 @@ const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
 
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
-
-let user = {};
 
 function changeAvatar(evt, popup) {
   avatarSubmit.textContent = "Сохранение...";
@@ -101,9 +117,11 @@ function createNewCard(data, popup) {
   api
     .addNewCard({ name: data["forma-title"], link: data["forma-info"] })
     .then((data) => {
-      cardList.render();
+      const card = createNewCards(data);
+      const cardElement = card.render();
+      cardList.addItem(cardElement);
+      // cardList.render();
       popup.close();
-      evt.target.reset();
     })
     .catch((err) => {
       console.error(err);
@@ -128,17 +146,15 @@ profAvatar.addEventListener("click", function () {
   changePopupAvatar.open();
 });
 
+let me;
 
-// popups.forEach((popup) => {
-//   popup.addEventListener("mousedown", (evt) => {
-//     if (evt.target.classList.contains("popup_opened")) {
-//       closePopup(popup);
-//     }
-//     if (evt.target.classList.contains("popup__close")) {
-//       closePopup(popup);
-//     }
-//   });
-// });
+Promise.all([api.getInitialCards(), api.getUserData()])
+  .then(([cards, userData]) => {
+    userInfo.setUserInfo(userData);
+    me = userData._id;
+    cardList.render(cards);
+  })
+  .catch((err) => console.log(err));
 
 //подключаю новую валидацию
 const Validat = new FormValidator(validationSetup)._enableValidation();

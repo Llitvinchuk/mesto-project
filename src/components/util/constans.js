@@ -6,7 +6,7 @@ const buttonAdd = document.querySelector(".profile__add-button");
 const nameInput = document.querySelector("#popup-title"); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector("#popup-info");
 const profTitle = document.querySelector(".profile__title");
-
+const cardSelector = "#template-elements";
 const profJob = document.querySelector(".profile__subtitle");
 const profAvatar = document.querySelector(".profile__avatar");
 const avatarName = document
@@ -15,6 +15,7 @@ const avatarName = document
 const avatarSubmit = document.querySelector(".popup__submit-button");
 const cardSubmit = document.querySelector(".popup__submit-button");
 const popupImage = ".popup_type_picture";
+const containerElements = ".element-container";
 
 export {
   popupSubmit,
@@ -29,6 +30,8 @@ export {
   avatarSubmit,
   cardSubmit,
   popupImage,
+  cardSelector,
+  containerElements,
 };
 
 export const validationSetup = {

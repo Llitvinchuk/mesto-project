@@ -1,11 +1,12 @@
 import Api from "./Api";
-import { PopupWithImage } from "./PopupWithImage";
 
 export default class Card {
-  constructor({ data, me, handleCardClick, container, api }) {
+  constructor({ data, me, handleCardClick, container, api, cardSelector }) {
     this._api = new Api();
 
     this._me = me;
+    this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
 
     this.container = container;
     this._id = data._id;
@@ -17,7 +18,7 @@ export default class Card {
 
   _getElement() {
     this._elementsTemplate = document
-      .querySelector("#template-elements")
+      .querySelector(this._cardSelector)
       .content.querySelector(".element")
       .cloneNode(true);
   }
@@ -54,15 +55,11 @@ export default class Card {
 
     this.handleLikeCard();
 
-    // this.container.append(this._elementsTemplate);
-
-    // this._likes.forEach((like) => {
-    //   if (this._likes === this._userId) {
-    //     this._elementsTemplate
-    //       .querySelector(".element__like")
-    //       .classList.add("element__like_active");
-    //   }
-    // });
+    if (this._likes.find((obj) => this._me?.data?._id === obj._id)) {
+      this._elementsTemplate
+        .querySelector(".element__like")
+        .classList.add("element__like_active");
+    }
 
     this._elementsTemplate
       .querySelector(".element__image")
@@ -74,11 +71,6 @@ export default class Card {
       });
 
     return this._elementsTemplate;
-  }
-
-  _handleCardClick({ name, link }) {
-    const popupWithImage = new PopupWithImage();
-    popupWithImage.open({ name, link });
   }
 
   handleLikeCard() {
