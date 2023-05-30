@@ -21,6 +21,7 @@ import {
   avatarSubmit,
   cardSubmit,
   popupImage,
+  validationSetup,
 } from "./util/constans";
 
 const api = new Api({
@@ -126,13 +127,6 @@ profAvatar.addEventListener("click", function () {
   changePopupAvatar.open();
 });
 
-const validationSetup = {
-  formSelector: ".popup__form",
-  contentSelector: ".popup__content",
-  submitButtonSelector: ".popup__submit-button",
-  disabledButton: "popup__submit-button_disabled",
-  titleError: "popup-title-error_active",
-};
 
 // popups.forEach((popup) => {
 //   popup.addEventListener("mousedown", (evt) => {
