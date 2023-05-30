@@ -2,9 +2,10 @@ import Api from "./Api";
 import Card from "./Card";
 
 export default class Section {
-  constructor({ api, selector }) {
+  constructor({ api, selector, me }) {
     this._api = new Api();
     this._container = document.querySelector(selector);
+    this._me = me;
   }
 
   addItem(element) {
@@ -28,6 +29,7 @@ export default class Section {
           data: item,
           container: this._container,
           api: this._api,
+          me: this._me,
         });
         const cardElement = card.render();
         this.addItem(cardElement);

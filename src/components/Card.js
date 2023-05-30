@@ -2,17 +2,14 @@ import Api from "./Api";
 import { PopupWithImage } from "./PopupWithImage";
 
 export default class Card {
-  constructor({ data, userId, handleCardClick, container, api }) {
+  constructor({ data, me, handleCardClick, container, api }) {
     this._api = new Api();
 
-    this.container = container;
+    this._me = me;
 
+    this.container = container;
     this._id = data._id;
     this._ownerId = data.owner._id;
-
-    this._userId = userId;
-    console.log(`🚀 ~ constructor ~ this._userId:`, this._userId);
-
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
@@ -36,7 +33,7 @@ export default class Card {
     this._elementsTemplate.querySelector(".element__like-counter").textContent =
       this._likes.length;
 
-    if (this._userId === this._ownerId) {
+    if (this._me?.data?._id === this._ownerId) {
       this._elementsTemplate
         .querySelector(".element__trash")
         .classList.add("element__trash_active");

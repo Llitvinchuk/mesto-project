@@ -31,7 +31,21 @@ const api = new Api({
   },
 });
 
-const cardList = new Section({ api, selector: ".element-container" });
+const userInfo = new UserInfo({
+  selectorName: ".profile__title",
+  selectorInfo: ".profile__subtitle",
+  selectorAvatar: ".profile__avatar",
+});
+
+api.getUserData().then((data) => {
+  userInfo.setUserInfo(data);
+});
+
+const cardList = new Section({
+  api,
+  selector: ".element-container",
+  me: userInfo,
+});
 cardList.render();
 
 function editProfile(data, popup) {
@@ -41,8 +55,6 @@ function editProfile(data, popup) {
     .editProfile({ name: data["popup-title"], about: data["popup-info"] })
     .then((data) => {
       userInfo.setUserInfo(data);
-      // profTitle.textContent = res.name;
-      // profSubtitle.textContent = res.about;
 
       popup.close();
     })
@@ -59,12 +71,6 @@ const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
 
-const userInfo = new UserInfo({
-  selectorName: ".profile__title",
-  selectorInfo: ".profile__subtitle",
-  selectorAvatar: ".profile__avatar",
-});
-
 let user = {};
 
 function changeAvatar(evt, popup) {
@@ -73,11 +79,10 @@ function changeAvatar(evt, popup) {
 
   api
     .editAvatar(avatar)
-    .then((item) => {
-      userInfo.setUserAvatar(item);
-      // profAvatar.src = item.avatar;
+    .then((data) => {
+      userInfo.setUserAvatar(data);
+
       popup.close();
-      // evt.target.reset();
     })
     .catch((err) => {
       console.error(err);

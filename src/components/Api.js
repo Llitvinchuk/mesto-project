@@ -67,7 +67,7 @@ export default class Api {
       method: "PATCH",
       headers: this._options.headers,
       body: JSON.stringify({ avatar: avatarUrl }),
-    }).then(this._getResponseData);
+    }).then(this._checkResponse);
   }
 
   deleteCard(id) {
