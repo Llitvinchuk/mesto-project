@@ -24,19 +24,19 @@ export default class FormValidator{
 	}
 
 	_checkInputValidity(form, input){
-		const isValid = input.validity.valid
-		if (input.validity.patternMismatch) {
-			input.setCustomValidity(input.dataset.errorMessage);
-	  }
-	  else if(input.validity.typeMismatch){
-	  	input.setCustomValidity(input.dataset.errorMessageUrl);
-	  }
-	  else if(input.validity.tooShort){
-	    input.setCustomValidity(input.dataset.errorMessageShort);
-	  }
-	  else {
-	  	input.setCustomValidity("");
-	  };
+		// const isValid = input.validity.valid
+		// if (input.validity.patternMismatch) {
+		// 	input.setCustomValidity(input.dataset.errorMessage);
+	  // }
+	  // else if(input.validity.typeMismatch){
+	  // 	input.setCustomValidity(input.dataset.errorMessageUrl);
+	  // }
+	  // else if(input.validity.tooShort){
+	  //   input.setCustomValidity(input.dataset.errorMessageShort);
+	  // }
+	  // else {
+	  // 	input.setCustomValidity("");
+	  // };
 		  if(!input.validity.valid){
 	    this._showError(input, form, input.dataset.errorMessage, this._options);
 	  } else{
