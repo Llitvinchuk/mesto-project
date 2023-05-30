@@ -38,16 +38,7 @@ export const validationSetup = {
   formSelector: ".popup__form",
   contentSelector: ".popup__content",
   submitButtonSelector: ".popup__submit-button",
-  submitButtonDeactive: ".popup__submit-button_disabled",
+  submitButtonDeactive: "popup__submit-button_disabled",
   titleError: "error",
   titleErrorActive: ".popup-error_active"
 };
-
-// export const ValidationSettings = {
-//   formList:'form',
-//   inputList:'popup__input',
-//   ButtonSave: 'popup__button-save',
-//   inactiveButton: 'popup__button-save_disable',
-//   inputError: 'error',
-//   errorClass: 'popup__warning_show'
-// }; 

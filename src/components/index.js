@@ -4,7 +4,7 @@ import Api from "./Api";
 import Section from "./Section";
 import { PopupWithImage } from "./PopupWithImage";
 
-import FormValidator from "./util/FormValidator";
+import FormValidator from "./FormValidator";
 import UserInfo from "./UserInfo";
 import { PopupWithForm } from "./PopupWithForm";
 
@@ -162,5 +162,12 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   })
   .catch((err) => console.log(err));
 
+
+
 //подключаю новую валидацию
-const Validat = new FormValidator(validationSetup)._enableValidation();
+const forms = document.querySelectorAll('.popup__form');
+
+forms.forEach((form) => {const Validate = new FormValidator(validationSetup,form)._enableValidation()})
+
+
+
