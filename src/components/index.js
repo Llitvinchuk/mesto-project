@@ -162,12 +162,9 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   })
   .catch((err) => console.log(err));
 
-
-
 //подключаю новую валидацию
-const forms = document.querySelectorAll('.popup__form');
+const forms = document.querySelectorAll(".popup__form");
 
-forms.forEach((form) => {const Validate = new FormValidator(validationSetup,form)._enableValidation()})
-
-
-
+forms.forEach((form) => {
+  const Validate = new FormValidator(validationSetup, form)._enableValidation();
+});
