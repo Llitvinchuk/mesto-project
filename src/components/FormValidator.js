@@ -2,7 +2,7 @@ export default class FormValidator {
   constructor(options, form) {
     this._options = options;
     this._form = form;
-    this._contentPopups = Array.from(form.querySelectorAll(this._options.contentSelector));
+    this._contentPopups = Array.from(this._form.querySelectorAll(this._options.contentSelector));
     this._buttonSave = form.querySelector(this._options.submitButtonSelector);
   }
 
@@ -66,10 +66,9 @@ export default class FormValidator {
     }
   }
 
-  _disableButton(popup) {
-    const buttonSave = popup.querySelector(this._options.submitButtonSelector);
-    buttonSave.setAttribute("disabled", true);
-    buttonSave.classList.add(this._options.submitButtonDeactive);
+  _disableButton() {
+    this._buttonSave.setAttribute("disabled", true);
+    this._buttonSave.classList.add(this._options.submitButtonDeactive);
   }
 
   _hasInvalidInput(contentPopups) {
