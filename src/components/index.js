@@ -43,7 +43,35 @@ const onCardClick = (data) => () => popupWithImage.open(data);
 const createNewCards = (data) => {
   const card = new Card({
     data: data,
-    api,
+    handleLike: (card) => {
+      const elementLike =
+        card._elementsTemplate.querySelector(".element__like");
+      const likeCounter = card._elementsTemplate.querySelector(
+        ".element__like-counter"
+      );
+      if (elementLike.classList.contains("element__like_active")) {
+        api
+          .deleteLike(card._id)
+          .then((data) => {
+            likeCounter.textContent = data.likes.length;
+            elementLike.classList.remove("element__like_active");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        api
+          .addLike(card._id)
+          .then((data) => {
+            likeCounter.textContent = data.likes.length;
+            elementLike.classList.add("element__like_active");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },
+
     userId,
     handleCardClick: onCardClick(data),
     handleLikeCard: (_) => card.handleLikeCard(),
@@ -128,7 +156,10 @@ function createNewCard(data, popup) {
       cardList.addItem(cardElement);
 
       //эта строчка отключает кнопку
-      const disableButton = new FormValidator(validationSetup, popup._popupForm)._disableButton();
+      const disableButton = new FormValidator(
+        validationSetup,
+        popup._popupForm
+      )._disableButton();
 
       popup.close();
     })
@@ -170,7 +201,5 @@ const forms = document.querySelectorAll(".popup__form");
 forms.forEach((form) => {
   const Validate = new FormValidator(validationSetup, form)._enableValidation();
 });
-
-
 
 //const disableButton = new FormValidator(validationSetup, ???)._disableButton();
