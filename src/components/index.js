@@ -127,8 +127,7 @@ function createNewCard(data, popup) {
       const cardElement = card.render();
       cardList.addItem(cardElement);
 
-      //эта строчка отключает кнопку
-      const disableButton = new FormValidator(validationSetup, popup._popupForm)._disableButton();
+      CardValidate.disableButton();
 
       popup.close();
     })
@@ -165,12 +164,14 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   })
   .catch((err) => console.log(err));
 
-//подключаю новую валидацию
-const forms = document.querySelectorAll(".popup__form");
-forms.forEach((form) => {
-  const Validate = new FormValidator(validationSetup, form)._enableValidation();
-});
 
 
+//подключаем валидацию
+  const CardValidate = new FormValidator(validationSetup, createCard._popupForm);
+  CardValidate.enableValidation();
+  
+  const ProfileValidate = new FormValidator(validationSetup, popupTypeProfile._popupForm);
+  ProfileValidate.enableValidation();  
 
-//const disableButton = new FormValidator(validationSetup, ???)._disableButton();
+  const AvatarValidate = new FormValidator(validationSetup, changePopupAvatar._popupForm);
+  AvatarValidate.enableValidation();

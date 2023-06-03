@@ -6,7 +6,7 @@ export default class FormValidator {
     this._buttonSave = form.querySelector(this._options.submitButtonSelector);
   }
 
-  _enableValidation() {
+  enableValidation() {
     this._setEventListener(this._form);  
   }
 
@@ -15,7 +15,7 @@ export default class FormValidator {
     this._contentPopups.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(formElement, inputElement, this._options);
-        this._setSaveButtonStatus(this._contentPopups, this._buttonSave, this._options);
+        this._setSaveButtonStatus(this._contentPopups, this._options);
       });
     });
   }
@@ -56,17 +56,17 @@ export default class FormValidator {
     errorSpan.classList.remove(this._options.titleErrorActive);
   }
 
-  _setSaveButtonStatus(contentPopups, button) {
+  _setSaveButtonStatus(contentPopups) {
     if (this._hasInvalidInput(contentPopups)) {
-      button.setAttribute("disabled", true);
-      button.classList.add(this._options.submitButtonDeactive);
+      this._buttonSave.setAttribute("disabled", true);
+      this._buttonSave.classList.add(this._options.submitButtonDeactive);
     } else {
-      button.removeAttribute("disabled");
-      button.classList.remove(this._options.submitButtonDeactive);
+      this._buttonSave.removeAttribute("disabled");
+      this._buttonSave.classList.remove(this._options.submitButtonDeactive);
     }
   }
 
-  _disableButton() {
+  disableButton() {
     this._buttonSave.setAttribute("disabled", true);
     this._buttonSave.classList.add(this._options.submitButtonDeactive);
   }
