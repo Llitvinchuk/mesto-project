@@ -43,7 +43,35 @@ const onCardClick = (data) => () => popupWithImage.open(data);
 const createNewCards = (data) => {
   const card = new Card({
     data: data,
-    api,
+    handleLike: (card) => {
+      const elementLike =
+        card._elementsTemplate.querySelector(".element__like");
+      const likeCounter = card._elementsTemplate.querySelector(
+        ".element__like-counter"
+      );
+      if (elementLike.classList.contains("element__like_active")) {
+        api
+          .deleteLike(card._id)
+          .then((data) => {
+            likeCounter.textContent = data.likes.length;
+            elementLike.classList.remove("element__like_active");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      } else {
+        api
+          .addLike(card._id)
+          .then((data) => {
+            likeCounter.textContent = data.likes.length;
+            elementLike.classList.add("element__like_active");
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+    },
+
     userId,
     handleCardClick: onCardClick(data),
     handleLikeCard: (_) => card.handleLikeCard(),
@@ -90,7 +118,7 @@ function editProfile(data, popup) {
     });
 }
 
-const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
+const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile); //попап профиля
 
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
@@ -115,7 +143,7 @@ function changeAvatar(evt, popup) {
     });
 }
 
-const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar);
+const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar); // попап аватарки
 
 function createNewCard(data, popup) {
   createCard.setLoading(true);
@@ -138,7 +166,7 @@ function createNewCard(data, popup) {
       createCard.setLoading(false);
     });
 }
-const createCard = new PopupWithForm(".popup-new-place", createNewCard);
+const createCard = new PopupWithForm(".popup-new-place", createNewCard); // попап добавления карточки
 
 buttonEdit.addEventListener("click", function () {
   popupTypeProfile.open();
@@ -165,6 +193,7 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   .catch((err) => console.log(err));
 
 
+<<<<<<< HEAD
 
 //подключаем валидацию
   const CardValidate = new FormValidator(validationSetup, createCard._popupForm);
@@ -175,3 +204,6 @@ Promise.all([api.getInitialCards(), api.getUserData()])
 
   const AvatarValidate = new FormValidator(validationSetup, changePopupAvatar._popupForm);
   AvatarValidate.enableValidation();
+=======
+//const disableButton = new FormValidator(validationSetup, ???)._disableButton();
+>>>>>>> 9e666ab6ba013993b267821a5774946227a3a60f

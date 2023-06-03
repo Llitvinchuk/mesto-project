@@ -2,13 +2,11 @@ export default class Card {
   constructor({
     data,
     userId,
+    handleLike,
     handleCardClick,
     handleLikeCard,
     handleDeleteCard,
-    api,
   }) {
-    this._api = api;
-
     this._userId = userId;
     this._handleCardClick = handleCardClick;
     this._handleLikeCard = handleLikeCard;
@@ -18,6 +16,7 @@ export default class Card {
     this._name = data.name;
     this._likes = data.likes;
     this._link = data.link;
+    this._handleLike = handleLike;
   }
 
   _getElement() {
@@ -80,25 +79,9 @@ export default class Card {
     );
 
     if (elementLike.classList.contains("element__like_active")) {
-      this._api
-        .deleteLike(this._id)
-        .then((data) => {
-          likeCounter.textContent = data.likes.length;
-          elementLike.classList.remove("element__like_active");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      this._handleLike(this);
     } else {
-      this._api
-        .addLike(this._id)
-        .then((data) => {
-          likeCounter.textContent = data.likes.length;
-          elementLike.classList.add("element__like_active");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      this._handleLike(this);
     }
   }
   handleRemoveCard() {
