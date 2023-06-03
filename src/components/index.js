@@ -192,9 +192,6 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   })
   .catch((err) => console.log(err));
 
-
-<<<<<<< HEAD
-
 //подключаем валидацию
   const CardValidate = new FormValidator(validationSetup, createCard._popupForm);
   CardValidate.enableValidation();
@@ -204,6 +201,4 @@ Promise.all([api.getInitialCards(), api.getUserData()])
 
   const AvatarValidate = new FormValidator(validationSetup, changePopupAvatar._popupForm);
   AvatarValidate.enableValidation();
-=======
-//const disableButton = new FormValidator(validationSetup, ???)._disableButton();
->>>>>>> 9e666ab6ba013993b267821a5774946227a3a60f
+
