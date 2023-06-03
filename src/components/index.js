@@ -46,11 +46,6 @@ const onCardClick = (data) => () => popupWithImage.open(data);
 const createNewCards = (data) => {
   const card = new Card({
     data: data,
-     handleLike: '',
-     //(card) => {
-    //   /*********************/
-    //    console.log("123");
-    // },  /*********************/
 
     userId,
 
