@@ -40,41 +40,43 @@ const userInfo = new UserInfo({
 
 const onCardClick = (data) => () => popupWithImage.open(data);
 
+
+
+
 const createNewCards = (data) => {
   const card = new Card({
     data: data,
-    handleLike: (card) => {
-      const elementLike =
-        card._elementsTemplate.querySelector(".element__like");
-      const likeCounter = card._elementsTemplate.querySelector(
-        ".element__like-counter"
-      );
-      if (elementLike.classList.contains("element__like_active")) {
-        api
-          .deleteLike(card._id)
-          .then((data) => {
-            likeCounter.textContent = data.likes.length;
-            elementLike.classList.remove("element__like_active");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      } else {
-        api
-          .addLike(card._id)
-          .then((data) => {
-            likeCounter.textContent = data.likes.length;
-            elementLike.classList.add("element__like_active");
+     handleLike: '',
+     //(card) => {
+    //   /*********************/
+    //    console.log("123");
+    // },  /*********************/
+
+    userId,
+
+    handleCardClick: onCardClick(data),
+
+    handleLikeCard: (_) => {
+      if (!event.target.classList.contains('element__like_active')) {
+        api.addLike(card._id)
+          .then((res)=>{
+            card.likeActive(res.likes)
           })
           .catch((err) => {
             console.error(err);
           });
       }
+      else {        
+        api.deleteLike(card._id)
+          .then((res)=>{
+            card.likeDiactive(res.likes)
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+        }
     },
 
-    userId,
-    handleCardClick: onCardClick(data),
-    handleLikeCard: (_) => card.handleLikeCard(),
     handleDeleteCard: (_) => {
       api
         .deleteCard(data._id)
@@ -86,9 +88,10 @@ const createNewCards = (data) => {
         });
     },
   });
-
   return card;
 };
+
+
 const cardList = new Section(
   {
     renderer: (item) => {
@@ -192,9 +195,6 @@ Promise.all([api.getInitialCards(), api.getUserData()])
   })
   .catch((err) => console.log(err));
 
-
-<<<<<<< HEAD
-
 //подключаем валидацию
   const CardValidate = new FormValidator(validationSetup, createCard._popupForm);
   CardValidate.enableValidation();
@@ -204,6 +204,4 @@ Promise.all([api.getInitialCards(), api.getUserData()])
 
   const AvatarValidate = new FormValidator(validationSetup, changePopupAvatar._popupForm);
   AvatarValidate.enableValidation();
-=======
-//const disableButton = new FormValidator(validationSetup, ???)._disableButton();
->>>>>>> 9e666ab6ba013993b267821a5774946227a3a60f
+

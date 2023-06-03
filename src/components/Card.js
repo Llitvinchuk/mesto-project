@@ -28,14 +28,11 @@ export default class Card {
 
   render() {
     this._getElement();
-    this._elementImage =
-      this._elementsTemplate.querySelector(".element__image");
+    this._elementImage = this._elementsTemplate.querySelector(".element__image");
     this._elementImage.src = this._link;
     this._elementImage.alt = this._name;
-    this._elementsTemplate.querySelector(".element__title").textContent =
-      this._name;
-    this._elementsTemplate.querySelector(".element__like-counter").textContent =
-      this._likes.length;
+    this._elementsTemplate.querySelector(".element__title").textContent = this._name;
+    this._elementsTemplate.querySelector(".element__like-counter").textContent = this._likes.length;
 
     if (this._userId === this._ownerId) {
       this._elementsTemplate
@@ -58,32 +55,27 @@ export default class Card {
         });
       });
 
-    this._elementsTemplate
-      .querySelector(".element__like")
-      .addEventListener("click", () => {
+    this._elementsTemplate.querySelector(".element__like").addEventListener("click", () => {
         this._handleLikeCard();
       });
-    this._elementsTemplate
-      .querySelector(".element__trash")
-      .addEventListener("click", () => {
+
+    this._elementsTemplate.querySelector(".element__trash").addEventListener("click", () => {
         this._handleDeleteCard();
       });
 
     return this._elementsTemplate;
   }
 
-  handleLikeCard() {
-    const elementLike = this._elementsTemplate.querySelector(".element__like");
-    const likeCounter = this._elementsTemplate.querySelector(
-      ".element__like-counter"
-    );
+ likeActive(counter){
+  this._elementsTemplate.querySelector(".element__like").classList.add("element__like_active");
+  return this._elementsTemplate.querySelector(".element__like-counter").textContent = counter.length;
+ }
 
-    if (elementLike.classList.contains("element__like_active")) {
-      this._handleLike(this);
-    } else {
-      this._handleLike(this);
-    }
-  }
+ likeDiactive(counter){
+  this._elementsTemplate.querySelector(".element__like").classList.remove("element__like_active");
+  return this._elementsTemplate.querySelector(".element__like-counter").textContent = counter.length;
+ }   
+ 
   handleRemoveCard() {
     this._elementsTemplate.remove();
   }
