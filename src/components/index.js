@@ -53,7 +53,7 @@ const createNewCards = (data) => {
         api
           .deleteLike(card._id)
           .then((data) => {
-            likeCounter.textContent = data.likes.length;
+            // likeCounter.textContent = data.likes.length;
             elementLike.classList.remove("element__like_active");
           })
           .catch((err) => {
@@ -63,7 +63,7 @@ const createNewCards = (data) => {
         api
           .addLike(card._id)
           .then((data) => {
-            likeCounter.textContent = data.likes.length;
+            // likeCounter.textContent = data.likes.length;
             elementLike.classList.add("element__like_active");
           })
           .catch((err) => {
