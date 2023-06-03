@@ -118,7 +118,7 @@ function editProfile(data, popup) {
     });
 }
 
-const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile);
+const popupTypeProfile = new PopupWithForm(".popup_type_profile", editProfile); //попап профиля
 
 const popupWithImage = new PopupWithImage(popupImage);
 popupWithImage.setEventListeners();
@@ -143,7 +143,7 @@ function changeAvatar(evt, popup) {
     });
 }
 
-const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar);
+const changePopupAvatar = new PopupWithForm(".popup__avatar", changeAvatar); // попап аватарки
 
 function createNewCard(data, popup) {
   createCard.setLoading(true);
@@ -170,7 +170,7 @@ function createNewCard(data, popup) {
       createCard.setLoading(false);
     });
 }
-const createCard = new PopupWithForm(".popup-new-place", createNewCard);
+const createCard = new PopupWithForm(".popup-new-place", createNewCard); // попап добавления карточки
 
 buttonEdit.addEventListener("click", function () {
   popupTypeProfile.open();
