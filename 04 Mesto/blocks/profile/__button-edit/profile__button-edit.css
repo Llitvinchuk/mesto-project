@@ -1,0 +1,25 @@
+.profile__button-edit{
+	width: 24px;
+	height: 24px;
+	background-image: url('../../../images/Pansel.svg');
+	background-color: transparent;
+	border: 1px #fff solid;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin-bottom: 8px;
+}
+
+.profile__button-edit:hover{
+	opacity: .6;
+	cursor: pointer
+}
+
+@media screen and (max-width:767px){
+  .profile__button-edit{
+    width: 18px;
+		height: 18px;
+		margin: 0;
+		background-size: 7.5px;
+		justify-self: baseline;
+  }
+}

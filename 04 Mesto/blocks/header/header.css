@@ -1,0 +1,11 @@
+.header{
+	border-bottom: 1px solid;
+	border-color: rgba(84, 84, 84, .7) ;
+	margin-top: 45px;
+}
+
+@media screen and (min-width:320px) and (max-width:767px){
+	.header{
+		margin-top: 28px;
+	}	
+}

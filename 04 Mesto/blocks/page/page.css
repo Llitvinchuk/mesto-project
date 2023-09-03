@@ -1,0 +1,10 @@
+.page{
+	display: flex;
+	flex-direction: column;
+	flex:auto;
+	background-color: #000;
+	max-width: 880px;
+	margin: 0 auto;
+	color: #fff;
+	box-sizing: border-box;
+}
